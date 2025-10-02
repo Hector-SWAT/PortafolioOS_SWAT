@@ -1,16 +1,58 @@
 ---
-
+// src/pages/index.astro
+import Loader from "../components/Loader.jsx";
+import Desktop from "../components/Desktop.jsx";
+import '../styles/global.css';
+import WindowManager from '../components/WindowManager';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Radnaabazar OS - Portfolio</title>
+    
+    <!-- Preload fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Meta tags adicionales -->
+    <meta name="description" content="Portfolio interactivo simulando Parrot Security OS" />
+    <meta name="theme-color" content="#1e8a4a" />
+  </head>
+  <body>
+    <div id="app-root">
+      <Loader client:load>
+        <Desktop client:load/>
+        
+      </Loader>
+    </div>
+
+    <!-- Script mínimo de inicialización -->
+    <script is:inline>
+      console.log('🐦 Parrot OS Portfolio - Initializing...');
+    </script>
+  </body>
 </html>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    height: 100vh;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  #app-root {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+  }
+</style>

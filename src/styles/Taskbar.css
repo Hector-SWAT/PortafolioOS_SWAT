@@ -1,0 +1,376 @@
+/* Taskbar.css */
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(2rem, 8vh, 3rem);
+  background: #0F2030;
+  backdrop-filter: blur(1rem) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--space-sm, 0.5rem);
+  z-index: var(--z-fixed, 1000);
+  gap: var(--space-sm, 0.5rem);
+  box-sizing: border-box;
+  font-family: 'Ubuntu', sans-serif;
+  color: #e0e0e0;
+  font-size: 0.85rem;
+}
+
+.taskbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 0.25rem);
+  flex: 1;
+  min-width: 0;
+}
+
+.taskbar-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 0 1 auto;
+  position: relative;
+  max-width: 60%;
+}
+
+.taskbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 0.25rem);
+  flex-shrink: 0;
+}
+
+/* Botón de menú */
+.menu-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 4px;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menu-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.menu-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Aplicaciones favoritas */
+.favorite-apps {
+  display: flex;
+  gap: var(--space-xs, 0.25rem);
+}
+
+.app-launcher {
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.app-launcher:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.app-launcher.active {
+  background: rgba(41, 128, 185, 0.3);
+  border-bottom: 2px solid #2980b9;
+}
+
+.app-icon {
+  font-size: 1rem;
+}
+
+/* Ventanas abiertas */
+.open-windows {
+  display: flex;
+  gap: 2px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.open-windows::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.window-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  max-width: 12rem;
+  min-width: fit-content;
+}
+
+.window-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.window-button.active {
+  background: rgba(41, 128, 185, 0.3);
+  border-bottom: 2px solid #2980b9;
+}
+
+.window-button.minimized {
+  opacity: 0.6;
+}
+
+.window-icon {
+  font-size: 0.9rem;
+}
+
+.window-name {
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e0e0e0;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-left: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background: rgba(231, 76, 60, 0.3);
+  color: #e74c3c;
+}
+
+/* Espacios de trabajo */
+.workspaces {
+  display: flex;
+  gap: 2px;
+}
+
+.workspace-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.7rem;
+}
+
+.workspace-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.workspace-button.active {
+  background: rgba(41, 128, 185, 0.3);
+  border-bottom: 2px solid #2980b9;
+}
+
+/* System tray */
+.system-tray {
+  position: relative;
+}
+
+.tray-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tray-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tray-icon {
+  font-size: 0.9rem;
+}
+
+.tray-time {
+  font-size: 0.75rem;
+}
+
+.tray-menu {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: #0F2030;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.5rem;
+  min-width: 10rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: var(--z-fixed, 1000);
+}
+
+.tray-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  font-size: 0.8rem;
+}
+
+.tray-label {
+  color: #b0b0b0;
+}
+
+.tray-value {
+  color: #e0e0e0;
+}
+
+/* Menú de aplicaciones */
+.app-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: #0F2030;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.5rem;
+  width: 20rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: var(--z-fixed, 1000);
+}
+
+.app-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-menu-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+.close-menu {
+  background: transparent;
+  border: none;
+  color: #e0e0e0;
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.close-menu:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.app-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.category-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.8rem;
+  color: #b0b0b0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-apps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.25rem;
+}
+
+.app-menu-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.app-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.app-menu-item .app-icon {
+  font-size: 1rem;
+}
+
+.app-menu-item .app-name {
+  font-size: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .taskbar {
+    padding: 0 0.25rem;
+  }
+  
+  .window-name {
+    display: none;
+  }
+  
+  .category-apps {
+    grid-template-columns: 1fr;
+  }
+  
+  .app-menu {
+    width: 16rem;
+  }
+}

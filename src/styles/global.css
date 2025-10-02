@@ -1,0 +1,483 @@
+/* global.css - Portfolio OS Styles (Sin Tailwind) */
+
+/* Importar fuentes */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+
+/* Variables CSS para colores dinámicos */
+:root {
+  --hover-rgb: 30, 138, 74;
+  --hover-primary: #1e8a4a;
+  --hover-secondary: #a0f0a0;
+  --hover-glow: rgba(30, 138, 74, 0.4);
+}
+
+/* Reset y configuración base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+  font-size: 16px; /* Base para rem */
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background-color: #0a0a0a;
+  color: #e0e0e0;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+  line-height: 1.5;
+}
+
+/* Control del loader */
+body.loaded #loader-screen {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+/* ===== VARIABLES CSS RESPONSIVAS ===== */
+:root {
+  /* Colores */
+  --primary-green: #22c55e;
+  --primary-cyan: #06b6d4;
+  --dark-bg: #0a0a0a;
+  --surface-bg: #1a1a1a;
+  --border-color: #333333;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  
+  /* Colores Parrot OS */
+  --parrot-green: #1e8a4a;
+  --parrot-dark: #0c0c0d;
+  --parrot-darker: #062418;
+  --terminal-bg: #1a1a1a;
+  --window-bg: rgba(40, 40, 40, 0.95);
+
+  /* Breakpoints */
+  --mobile: 480px;
+  --tablet: 768px;
+  --laptop: 1024px;
+  --desktop: 1200px;
+  --large: 1440px;
+
+  /* Espaciados responsivos */
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 1vw, 1rem);
+  --space-md: clamp(1rem, 2vw, 1.5rem);
+  --space-lg: clamp(1.5rem, 3vw, 2rem);
+  --space-xl: clamp(2rem, 4vw, 3rem);
+
+  /* Tamaños de fuente responsivos */
+  --text-xs: clamp(0.75rem, 2vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 2.5vw, 1rem);
+  --text-base: clamp(1rem, 3vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 3.5vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 4vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 5vw, 1.875rem);
+  --text-3xl: clamp(1.875rem, 6vw, 2.25rem);
+
+  /* Bordes */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Z-index layers */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal: 1040;
+  --z-popover: 1050;
+  --z-tooltip: 1060;
+  --z-toast: 1070;
+}
+
+/* ===== MEDIA QUERIES GLOBALES ===== */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  body {
+    user-select: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* ===== CLASES UTILITARIAS RESPONSIVAS ===== */
+
+/* Display */
+.responsive-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--space-sm);
+}
+
+/* Espaciado */
+.p-responsive {
+  padding: var(--space-md);
+}
+
+.px-responsive {
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+.py-responsive {
+  padding-top: var(--space-md);
+  padding-bottom: var(--space-md);
+}
+
+.m-responsive {
+  margin: var(--space-md);
+}
+
+.mx-responsive {
+  margin-left: var(--space-md);
+  margin-right: var(--space-md);
+}
+
+.my-responsive {
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+/* Texto responsivo */
+.text-responsive-xs { font-size: var(--text-xs); }
+.text-responsive-sm { font-size: var(--text-sm); }
+.text-responsive-base { font-size: var(--text-base); }
+.text-responsive-lg { font-size: var(--text-lg); }
+.text-responsive-xl { font-size: var(--text-xl); }
+.text-responsive-2xl { font-size: var(--text-2xl); }
+.text-responsive-3xl { font-size: var(--text-3xl); }
+
+/* Contenedores responsivos */
+.container-responsive {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--space-sm);
+}
+
+@media (min-width: 768px) {
+  .container-responsive {
+    max-width: 720px;
+    padding: 0 var(--space-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-responsive {
+    max-width: 1140px;
+  }
+}
+
+/* ===== COMPONENTES BASE RESPONSIVOS ===== */
+
+/* Loader específico */
+#loader-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+  padding: var(--space-md);
+}
+
+/* Desktop environment */
+.desktop-environment {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  background: linear-gradient(135deg, #1f2937, #000000, #1f2937);
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px var(--primary-green); }
+  50% { box-shadow: 0 0 20px var(--primary-green), 0 0 30px var(--primary-green); }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slide-down {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Clases de animación */
+.animate-spin { animation: spin 1s linear infinite; }
+.animate-fade-in { animation: fade-in 0.5s ease-in; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-slide-up { animation: slide-up 0.3s ease-out; }
+.animate-slide-down { animation: slide-down 0.3s ease-out; }
+
+/* ===== COMPONENTES UI RESPONSIVOS ===== */
+
+/* Botones responsivos */
+.btn-responsive {
+  font-family: 'JetBrains Mono', monospace;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  border: none;
+  outline: none;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  white-space: nowrap;
+  min-height: 2.5rem;
+}
+
+.btn-responsive:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn-responsive:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-responsive:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Inputs responsivos */
+.input-responsive {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--surface-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  outline: none;
+  transition: all 0.15s ease-in-out;
+  font-size: var(--text-sm);
+  width: 100%;
+}
+
+.input-responsive:focus {
+  border-color: var(--primary-cyan);
+  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2);
+}
+
+.input-responsive::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Cards responsivas */
+.card-responsive {
+  background: var(--surface-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  transition: all 0.3s ease;
+}
+
+.card-responsive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===== UTILIDADES RESPONSIVAS ===== */
+
+/* Flexbox utilities */
+.flex-responsive {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* Grid utilities */
+.grid-responsive {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+}
+
+/* Position utilities */
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Text utilities */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Visibility utilities */
+.hide-mobile {
+  display: block;
+}
+
+.show-mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none;
+  }
+  
+  .show-mobile-only {
+    display: block;
+  }
+  
+  .flex-between {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ===== SCROLLBARS ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020202;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+  border: 1px solid #020202;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-cyan);
+}
+
+/* Scrollbars para móviles */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+/* ===== SELECCIÓN DE TEXTO ===== */
+::selection {
+  background-color: var(--primary-cyan);
+  color: #020202;
+}
+
+/* ===== ESTADOS ESPECIALES ===== */
+.loading {
+  pointer-events: none;
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+  transform: scale(1.02);
+}
+
+/* Focus visible para accesibilidad */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--primary-cyan);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border-color: #ffffff;
+    --text-secondary: #ffffff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,488 @@
+---
+// src/components/Taskbar.astro
+import TaskbarClient from './TaskbarClient.astro';
+
+---
+<div class="taskbar">
+  <div class="taskbar-left">
+    <!-- START MENU WRAPPER -->
+    <div class="start-menu-wrapper" id="startWrapper">
+      <button class="start-button" id="startButton" aria-haspopup="true" aria-expanded="false">
+        <img src="/icons/icons8-parrot-security.svg" alt="Parrot" />
+        <span>Applications</span>
+      </button>
+
+      <!-- START MENU -->
+      <nav class="start-menu" id="startMenu" role="menu" aria-hidden="true">
+        <div class="start-menu-header">
+          <input type="search" id="startSearch" placeholder="Buscar..." aria-label="Buscar aplicaciones" />
+        </div>
+
+        <!-- Categorías -->
+        <div class="start-menu-sections">
+          <section class="start-menu-section" data-section="internet">
+            <h4 class="start-section-title">Internet</h4>
+            <div class="menu-grid">
+              <button class="menu-item" data-app="browser" role="menuitem">
+                <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/apps/firefox.svg" alt="Navegador" />
+                <span>Navegador</span>
+              </button>
+              <button class="menu-item" data-app="mail" role="menuitem">
+                <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/apps/mail-message-new.svg" alt="Correo" />
+                <span>Correo</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="start-menu-section" data-section="tools">
+            <h4 class="start-section-title">Herramientas</h4>
+            <div class="menu-grid">
+              <button class="menu-item" data-app="terminal" role="menuitem">
+                <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/apps/utilities-terminal.svg" alt="Terminal" />
+                <span>Terminal</span>
+              </button>
+              <button class="menu-item" data-app="editor" role="menuitem">
+                <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/apps/accessories-text-editor.svg" alt="Editor" />
+                <span>Editor</span>
+              </button>
+              <button class="menu-item" data-app="files" role="menuitem">
+                <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/apps/system-file-manager.svg" alt="Archivos" />
+                <span>Archivos</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="start-menu-section" data-section="system">
+            <h4 class="start-section-title">Sistema</h4>
+            <div class="menu-grid">
+              <button class="menu-item" data-app="settings" role="menuitem">
+                <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/apps/preferences-system.svg" alt="Configuración" />
+                <span>Configuración</span>
+              </button>
+              <button class="menu-item" data-app="updates" role="menuitem">
+                <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/status/appointment-new-symbolic.svg" alt="Actualizaciones" />
+                <span>Actualizaciones</span>
+              </button>
+            </div>
+          </section>
+        </div>
+      </nav>
+    </div>
+
+    <!-- APLICACIONES FIJAS EN LA TASKBAR -->
+    <div class="taskbar-apps">
+      <div class="taskbar-app" data-app="terminal" title="Terminal">
+        <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/48x48/apps/utilities-terminal.svg" alt="Terminal" />
+      </div>
+      <div class="taskbar-app" data-app="browser" title="Navegador">
+        <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/48x48/apps/firefox.svg" alt="Browser" />
+      </div>
+      <div class="taskbar-app" data-app="files" title="Archivos">
+        <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/48x48/apps/system-file-manager.svg" alt="File Manager" />
+      </div>
+      <div class="taskbar-app" data-app="portfolio" title="Portfolio">
+        <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/48x48/apps/org.gnome.gedit.svg" alt="Portfolio" />
+      </div>
+      <div class="taskbar-app" data-app="cybersecurity" title="Cybersecurity">
+        <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/48x48/apps/preferences-system-network.svg" alt="Cybersecurity" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA DERECHA: TRAY + RELOJ -->
+  <div class="taskbar-right">
+    <div class="system-tray" id="systemTray">
+      <div class="tray-icon" title="Network">
+        <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/status/network-wireless-signal-excellent-symbolic.svg" alt="Network" />
+      </div>
+      <div class="tray-icon" title="Volume">
+        <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/status/audio-volume-high-symbolic.svg" alt="Volume" />
+      </div>
+      <div class="tray-icon" title="Battery">
+        <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/status/battery-full-symbolic.svg" alt="Battery" />
+      </div>
+      <div class="tray-icon" title="Settings">
+        <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/24x24/apps/preferences-system.svg" alt="Settings" />
+      </div>
+    </div>
+
+    <div class="clock" id="clock">
+      <span id="time">14:25</span>
+      <span id="date">Mon Jun 12</span>
+    </div>
+  </div>
+</div>
+
+<style>
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: rgba(25, 25, 25, 0.98);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  z-index: 1000;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.taskbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+}
+
+.taskbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.start-menu-wrapper {
+  position: relative;
+}
+
+.start-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #1e8a4a 0%, #2d9c5c 100%);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(30, 138, 74, 0.4);
+  font-family: "Ubuntu", sans-serif;
+  min-height: 36px;
+}
+
+.start-button:hover {
+  background: linear-gradient(135deg, #2d9c5c 0%, #1e8a4a 100%);
+  transform: translateY(-1px);
+}
+
+.start-button img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+.start-menu {
+  display: none;
+  position: absolute;
+  bottom: 55px;
+  left: 0;
+  background: rgba(25, 25, 25, 0.98);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 320px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  animation: fadeIn 0.18s ease;
+  z-index: 1002;
+}
+
+.start-menu.show {
+  display: block;
+}
+
+.start-menu-header {
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  margin-bottom: 8px;
+}
+
+.start-menu-header input[type="search"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.02);
+  color: #eee;
+  font-size: 13px;
+  outline: none;
+}
+
+.start-menu-sections {
+  display: grid;
+  gap: 10px;
+}
+
+.start-menu-section {
+  display: block;
+}
+
+.start-section-title {
+  margin: 0 0 6px 6px;
+  color: #cfead7;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.start-section-title:hover {
+  color: #1e8a4a;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.02);
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  color: #eee;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.menu-item img { 
+  width: 18px; 
+  height: 18px; 
+}
+
+.menu-item:hover {
+  background: rgba(30, 138, 74, 0.18);
+  transform: translateY(-2px);
+  border-color: rgba(30,138,74,0.25);
+}
+
+.taskbar-apps {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.taskbar-app {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  position: relative;
+}
+
+.taskbar-app:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.taskbar-app.active {
+  background: rgba(30, 138, 74, 0.2);
+  border-color: rgba(30, 138, 74, 0.4);
+}
+
+.taskbar-app.active::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #1e8a4a;
+  border-radius: 50%;
+}
+
+.taskbar-app img {
+  width: 22px;
+  height: 22px;
+  opacity: 0.95;
+  transition: all 0.2s ease;
+}
+
+.system-tray {
+  display: flex;
+  gap: 6px;
+  padding-right: 15px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tray-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.tray-icon:hover { 
+  background: rgba(255,255,255,0.06); 
+}
+
+.tray-icon:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  z-index: 1001;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tray-icon img { 
+  width: 16px; 
+  height: 16px; 
+  opacity: 0.85; 
+}
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: #ffffff;
+  font-size: 11px;
+  line-height: 1.2;
+  font-family: "Ubuntu Mono", monospace;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+#time {
+  font-weight: bold;
+  color: #1e8a4a;
+  font-size: 12px;
+}
+
+#date {
+  opacity: 0.7;
+  font-size: 10px;
+}
+
+.tray-icon.notification::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  background: #ff4444;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  z-index: 2;
+}
+
+.app-window {
+  position: fixed;
+  background: rgba(26, 26, 26, 0.98);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.window-header {
+  background: linear-gradient(135deg, #1e8a4a 0%, #2d9c5c 100%);
+  color: white;
+  padding: 8px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: move;
+  user-select: none;
+}
+
+.window-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.window-controls button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.window-controls button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.app-content {
+  padding: 15px;
+  color: #ffffff;
+  overflow: auto;
+  height: calc(100% - 45px);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes fadeIn { 
+  from { opacity: 0; transform: translateY(8px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+@media (max-width: 1024px) { 
+  .taskbar { padding: 0 12px; gap: 15px; } 
+  .taskbar-app img { width: 20px; height: 20px; } 
+  .menu-grid { grid-template-columns: repeat(2, 1fr); } 
+}
+
+@media (max-width: 768px) { 
+  .start-button span { display: none; } 
+  .system-tray { display: none; } 
+  .start-menu { min-width: 260px; } 
+  .menu-grid { grid-template-columns: repeat(2,1fr); } 
+}
+
+@media (max-width: 480px) { 
+  .menu-grid { grid-template-columns: repeat(1,1fr); } 
+  .taskbar { height: 55px; } 
+}
+</style>
+
+<!-- Aquí cargamos la lógica de la taskbar -->
+<TaskbarClient />
+
