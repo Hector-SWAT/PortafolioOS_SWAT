@@ -5,6 +5,8 @@ import TicTacToe from './apps/TicTacToe';
 import Portfolio from './apps/Portfolio';
 import AboutMe from './apps/AboutMe';
 import Tetris from './apps/Tetris';
+import FlappyBird from './apps/FlappyBird'; 
+import Snake from './apps/Snake'; 
 
 const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setActiveApp }) => {
   const [draggingWindow, setDraggingWindow] = useState(null);
@@ -26,68 +28,109 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
   useEffect(() => {
     const getAppTitle = (appName) => {
       const titles = {
+        // Privacy
+        'tor-browser': '🌐 Tor Browser - System SWAT',
+        'vpn-client': '🛡️ VPN Client - System SWAT', 
+        'file-encryption': '🔒 File Encryption - System SWAT',
+        'password-manager': '🔑 Password Manager - System SWAT',
+        
+        // Office
+        'text-editor': '📝 Text Editor - System SWAT',
+        calculator: '🧮 Calculator - System SWAT',
+        spreadsheet: '📊 Spreadsheet - System SWAT',
+        'pdf-reader': '📄 PDF Reader - System SWAT',
+        
         // Internet
-        browser: '🌐 Firefox Browser',
-        firefox: '🌐 Firefox Browser',
-        youtube: '📺 YouTube',
-        spotify: '🎵 Spotify',
-        chromedragon: '🐉 Chrome Dragon',
-        chrome: '🐉 Chrome Dragon',
+        browser: '🌐 Firefox Browser - System SWAT',
+        firefox: '🌐 Firefox Browser - System SWAT',
+        youtube: '📺 YouTube - System SWAT',
+        spotify: '🎵 Spotify - System SWAT',
+        chromedragon: '🐉 Chrome Dragon - System SWAT',
+        chrome: '🐉 Chrome Dragon - System SWAT',
         
-        // Multimedia
-        vlc: '🎬 VLC Player',
-        camera: '📷 Camera',
-        gallery: '🖼️ Gallery',
+        // Graphics
+        gimp: '🎨 GIMP - System SWAT',
+        inkscape: '✏️ Inkscape - System SWAT',
+        blender: '🎬 Blender - System SWAT',
+        screenshot: '📸 Screenshot Tool - System SWAT',
         
-        // Development
-        terminal: '💻 Terminal',
-        neovim: '⚡ Neovim',
-        nvim: '⚡ Neovim',
-        vscode: '📝 Code Editor',
-        'code-editor': '📝 Code Editor',
+        // Sound & Video
+        vlc: '🎬 VLC Player - System SWAT',
+        audacity: '🎵 Audacity - System SWAT',
+        camera: '📷 Camera - System SWAT',
+        gallery: '🖼️ Gallery - System SWAT',
         
         // Games
-        tictactoe: '🎮 Tic Tac Toe',
-        'flappy-bird': '🐦 Flappy Bird',
-        flappybird: '🐦 Flappy Bird',
-        'snake-game': '🐍 Snake Game',
-        snake: '🐍 Snake Game',
-        'nes-emulator': '🎮 NES Emulator',
-        nintendo: '🎮 NES Emulator',
-        tetris: '🧊 Tetris',
+        tictactoe: '🎮 Tic Tac Toe - System SWAT',
+        'flappy-bird': '🐦 Flappy Bird - System SWAT',
+        flappybird: '🐦 Flappy Bird - System SWAT',
+        'snake-game': '🐍 Snake Game - System SWAT',
+        snake: '🐍 Snake Game - System SWAT',
+        'nes-emulator': '🎮 NES Emulator - System SWAT',
+        nintendo: '🎮 NES Emulator - System SWAT',
+        tetris: '🧊 Tetris - System SWAT',
+        
+        // Pentesting
+        nmap: '🔍 Network Scanner - System SWAT',
+        wireshark: '📡 Wireshark - System SWAT',
+        metasploit: '⚔️ Metasploit - System SWAT',
+        'burp-suite': '🛡️ Burp Suite - System SWAT',
+        
+        // Programming
+        terminal: '💻 Terminal - System SWAT',
+        neovim: '⚡ Neovim - System SWAT',
+        nvim: '⚡ Neovim - System SWAT',
+        vscode: '📝 Code Editor - System SWAT',
+        'code-editor': '📝 Code Editor - System SWAT',
+        'git-gui': '📚 Git GUI - System SWAT',
         
         // System Tools
-        files: '📁 File Manager',
-        'file-manager': '📁 File Manager',
-        calculator: '🧮 Calculator',
-        settings: '⚙️ Settings',
-        'system-monitor': '📊 System Monitor',
-        monitor: '📊 System Monitor',
+        files: '📁 File Manager - System SWAT',
+        'file-manager': '📁 File Manager - System SWAT',
+        'system-monitor': '📊 System Monitor - System SWAT',
+        monitor: '📊 System Monitor - System SWAT',
+        settings: '⚙️ Settings - System SWAT',
+        'software-updater': '🔄 Software Updater - System SWAT',
+        
+        // System Services
+        'service-manager': '🛠️ Service Manager - System SWAT',
+        'system-logs': '📋 System Logs - System SWAT',
+        'backup-tool': '💾 Backup Tool - System SWAT',
+        firewall: '🔥 Firewall Config - System SWAT',
+        
+        // Accessories
+        calendar: '📅 Calendar - System SWAT',
+        
+        // Universal Access
+        'screen-magnifier': '🔍 Screen Magnifier - System SWAT',
+        'screen-reader': '📢 Screen Reader - System SWAT',
+        'on-screen-keyboard': '⌨️ On-Screen Keyboard - System SWAT',
+        'high-contrast': '⚫ High Contrast - System SWAT',
         
         // Personal
-        portfolio: '🚀 My Portfolio',
-        about: '👨‍💻 About Me',
-        'about-me': '👨‍💻 About Me'
+        portfolio: '🚀 My Portfolio - System SWAT',
+        about: '👨‍💻 About Me - System SWAT',
+        'about-me': '👨‍💻 About Me - System SWAT'
       };
-      return titles[appName] || appName;
+      return titles[appName] || `${appName} - System SWAT`;
     };
 
     const getDefaultSize = (appName) => {
       const sizes = {
-        browser: { width: 800, height: 600 },
-        terminal: { width: 700, height: 450 },
+        browser: { width: 900, height: 650 },
+        terminal: { width: 750, height: 500 },
         tictactoe: { width: 400, height: 500 },
-        portfolio: { width: 600, height: 400 },
-        about: { width: 500, height: 350 },
-        youtube: { width: 800, height: 600 },
-        spotify: { width: 400, height: 600 },
-        vlc: { width: 600, height: 400 },
-        calculator: { width: 300, height: 400 },
-        settings: { width: 500, height: 400 },
-        files: { width: 700, height: 500 },
-        tetris: { width: 400, height: 500 }
+        portfolio: { width: 800, height: 600 },
+        about: { width: 600, height: 450 },
+        files: { width: 800, height: 500 },
+        settings: { width: 700, height: 550 },
+        vlc: { width: 800, height: 500 },
+        calculator: { width: 320, height: 420 },
+        tetris: { width: 400, height: 500 },
+        flappybird: { width: 450, height: 700 },
+        snake: { width: 500, height: 600 }
       };
-      return sizes[appName] || { width: 600, height: 400 };
+      return sizes[appName] || { width: 700, height: 500 };
     };
 
     const getMobileSize = (appName) => {
@@ -97,13 +140,8 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         tictactoe: { width: '95vw', height: '80vh' },
         portfolio: { width: '95vw', height: '80vh' },
         about: { width: '95vw', height: '70vh' },
-        youtube: { width: '95vw', height: '80vh' },
-        spotify: { width: '95vw', height: '70vh' },
-        vlc: { width: '95vw', height: '70vh' },
-        calculator: { width: '90vw', height: '60vh' },
-        settings: { width: '95vw', height: '80vh' },
-        files: { width: '95vw', height: '80vh' },
-        tetris: { width: '95vw', height: '80vh' }
+        flappybird: { width: '95vw', height: '80vh' },
+        snake: { width: '95vw', height: '85vh' }
       };
       return sizes[appName] || { width: '95vw', height: '80vh' };
     };
@@ -117,51 +155,86 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         portfolio: <Portfolio windowId={id} />,
         about: <AboutMe windowId={id} />,
         tetris: <Tetris windowId={id} />,
+        flappybird: <FlappyBird windowId={id} />,
+        snake: <Snake windowId={id} />,
         
-        // Placeholders para apps futuras
-        snake: <div className="app-content"><h2>🐍 Snake Game</h2><p>Próximamente...</p></div>,
-        files: <div className="app-content"><h2>📁 File Manager</h2><p>Próximamente...</p></div>,
-        flappybird: <div className="app-content"><h2>🐦 Flappy Bird</h2><p>Próximamente...</p></div>,
-        nintendo: <div className="app-content"><h2>🎮 NES Emulator</h2><p>Próximamente...</p></div>,
-        youtube: <div className="app-content"><h2>📺 YouTube</h2><p>Próximamente...</p></div>,
-        spotify: <div className="app-content"><h2>🎵 Spotify</h2><p>Próximamente...</p></div>,
-        chromedragon: <div className="app-content"><h2>🐉 Chrome Dragon</h2><p>Próximamente...</p></div>,
-        vlc: <div className="app-content"><h2>🎬 VLC Player</h2><p>Próximamente...</p></div>,
-        camera: <div className="app-content"><h2>📷 Camera</h2><p>Próximamente...</p></div>,
-        gallery: <div className="app-content"><h2>🖼️ Gallery</h2><p>Próximamente...</p></div>,
-        neovim: <div className="app-content"><h2>⚡ Neovim</h2><p>Próximamente...</p></div>,
-        vscode: <div className="app-content"><h2>📝 Code Editor</h2><p>Próximamente...</p></div>,
-        calculator: <div className="app-content"><h2>🧮 Calculator</h2><p>Próximamente...</p></div>,
-        settings: <div className="app-content"><h2>⚙️ Settings</h2><p>Próximamente...</p></div>,
-        monitor: <div className="app-content"><h2>📊 System Monitor</h2><p>Próximamente...</p></div>
+        // Placeholders para todas las nuevas apps
+        'tor-browser': <div className="app-content"><h2>🌐 Tor Browser</h2><p>Navegador seguro y anónimo</p></div>,
+        'vpn-client': <div className="app-content"><h2>🛡️ VPN Client</h2><p>Cliente de red privada virtual</p></div>,
+        'file-encryption': <div className="app-content"><h2>🔒 File Encryption</h2><p>Herramienta de cifrado de archivos</p></div>,
+        'password-manager': <div className="app-content"><h2>🔑 Password Manager</h2><p>Gestor de contraseñas seguro</p></div>,
+        'text-editor': <div className="app-content"><h2>📝 Text Editor</h2><p>Editor de texto avanzado</p></div>,
+        spreadsheet: <div className="app-content"><h2>📊 Spreadsheet</h2><p>Hoja de cálculo</p></div>,
+        'pdf-reader': <div className="app-content"><h2>📄 PDF Reader</h2><p>Lector de documentos PDF</p></div>,
+        youtube: <div className="app-content"><h2>📺 YouTube</h2><p>Plataforma de videos</p></div>,
+        spotify: <div className="app-content"><h2>🎵 Spotify</h2><p>Servicio de música en streaming</p></div>,
+        chromedragon: <div className="app-content"><h2>🐉 Chrome Dragon</h2><p>Navegador alternativo</p></div>,
+        gimp: <div className="app-content"><h2>🎨 GIMP</h2><p>Editor de imágenes</p></div>,
+        inkscape: <div className="app-content"><h2>✏️ Inkscape</h2><p>Editor de gráficos vectoriales</p></div>,
+        blender: <div className="app-content"><h2>🎬 Blender</h2><p>Software de modelado 3D</p></div>,
+        screenshot: <div className="app-content"><h2>📸 Screenshot Tool</h2><p>Herramienta de captura de pantalla</p></div>,
+        audacity: <div className="app-content"><h2>🎵 Audacity</h2><p>Editor de audio</p></div>,
+        camera: <div className="app-content"><h2>📷 Camera</h2><p>Aplicación de cámara</p></div>,
+        gallery: <div className="app-content"><h2>🖼️ Gallery</h2><p>Visor de imágenes</p></div>,
+        nintendo: <div className="app-content"><h2>🎮 NES Emulator</h2><p>Emulador de Nintendo</p></div>,
+        nmap: <div className="app-content"><h2>🔍 Network Scanner</h2><p>Escáner de red</p></div>,
+        wireshark: <div className="app-content"><h2>📡 Wireshark</h2><p>Analizador de protocolos</p></div>,
+        metasploit: <div className="app-content"><h2>⚔️ Metasploit</h2><p>Framework de pentesting</p></div>,
+        'burp-suite': <div className="app-content"><h2>🛡️ Burp Suite</h2><p>Herramienta de seguridad web</p></div>,
+        neovim: <div className="app-content"><h2>⚡ Neovim</h2><p>Editor de texto modal</p></div>,
+        vscode: <div className="app-content"><h2>📝 Code Editor</h2><p>Entorno de desarrollo</p></div>,
+        'git-gui': <div className="app-content"><h2>📚 Git GUI</h2><p>Interfaz gráfica para Git</p></div>,
+        files: <div className="app-content"><h2>📁 File Manager</h2><p>Administrador de archivos</p></div>,
+        monitor: <div className="app-content"><h2>📊 System Monitor</h2><p>Monitor del sistema</p></div>,
+        'software-updater': <div className="app-content"><h2>🔄 Software Updater</h2><p>Actualizador de software</p></div>,
+        'service-manager': <div className="app-content"><h2>🛠️ Service Manager</h2><p>Administrador de servicios</p></div>,
+        'system-logs': <div className="app-content"><h2>📋 System Logs</h2><p>Visor de registros del sistema</p></div>,
+        'backup-tool': <div className="app-content"><h2>💾 Backup Tool</h2><p>Herramienta de respaldo</p></div>,
+        firewall: <div className="app-content"><h2>🔥 Firewall Config</h2><p>Configurador de firewall</p></div>,
+        calendar: <div className="app-content"><h2>📅 Calendar</h2><p>Calendario y agenda</p></div>,
+        'screen-magnifier': <div className="app-content"><h2>🔍 Screen Magnifier</h2><p>Lupa de pantalla</p></div>,
+        'screen-reader': <div className="app-content"><h2>📢 Screen Reader</h2><p>Lector de pantalla</p></div>,
+        'on-screen-keyboard': <div className="app-content"><h2>⌨️ On-Screen Keyboard</h2><p>Teclado en pantalla</p></div>,
+        'high-contrast': <div className="app-content"><h2>⚫ High Contrast</h2><p>Modo alto contraste</p></div>
       };
-      return components[appName] || <div className="app-content">App not available: {appName}</div>;
+      return components[appName] || <div className="app-content"><h2>{appName}</h2><p>Aplicación - System SWAT</p></div>;
     };
 
     const getAppIcon = (appName) => {
       const icons = {
+        // Privacy
+        'tor-browser': 'https://img.icons8.com/color/48/tor-project.png',
+        'vpn-client': 'https://img.icons8.com/color/48/vpn.png',
+        'file-encryption': 'https://img.icons8.com/color/48/encryption.png',
+        'password-manager': 'https://img.icons8.com/color/48/password.png',
+        
+        // Office
+        'text-editor': 'https://img.icons8.com/color/48/document.png',
+        calculator: 'https://img.icons8.com/color/48/calculator.png',
+        spreadsheet: 'https://img.icons8.com/color/48/spreadsheet.png',
+        'pdf-reader': 'https://img.icons8.com/color/48/pdf.png',
+        
         // Internet
         browser: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/firefox.svg',
         firefox: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/firefox.svg',
         youtube: 'https://img.icons8.com/color/48/youtube-play.png',
         spotify: 'https://img.icons8.com/color/48/spotify--v1.png',
         chromedragon: 'https://img.icons8.com/color/48/chrome--v1.png',
-        chrome: 'https://img.icons8.com/color/48/chrome--v1.png',
         
-        // Multimedia
+        // Graphics
+        gimp: 'https://img.icons8.com/color/48/gimp.png',
+        inkscape: 'https://img.icons8.com/color/48/inkscape.png',
+        blender: 'https://img.icons8.com/color/48/blender-3d.png',
+        screenshot: 'https://img.icons8.com/color/48/screenshot.png',
+        
+        // Sound & Video
         vlc: 'https://img.icons8.com/color/48/vlc.png',
+        audacity: 'https://img.icons8.com/color/48/audacity.png',
         camera: 'https://img.icons8.com/color/48/camera.png',
         gallery: 'https://img.icons8.com/color/48/picture.png',
         
-        // Development
-        terminal: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/utilities-terminal.svg',
-        neovim: 'https://img.icons8.com/color/48/console.png',
-        nvim: 'https://img.icons8.com/color/48/console.png',
-        vscode: 'https://img.icons8.com/color/48/visual-studio-code-2019.png',
-        'code-editor': 'https://img.icons8.com/color/48/visual-studio-code-2019.png',
-        
         // Games
-        tictactoe: 'https://img.icons8.com/?size=100&id=lbJCBsemR2JG&format=png&color=000000',
+        tictactoe: 'https://img.icons8.com/color/48/tic-tac-toe.png',
         'flappy-bird': 'https://img.icons8.com/color/48/bird.png',
         flappybird: 'https://img.icons8.com/color/48/bird.png',
         'snake-game': 'https://img.icons8.com/color/48/snake.png',
@@ -170,13 +243,42 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         nintendo: 'https://img.icons8.com/color/48/nintendo-switch.png',
         tetris: 'https://img.icons8.com/color/48/tetris.png',
         
+        // Pentesting
+        nmap: 'https://img.icons8.com/color/48/network.png',
+        wireshark: 'https://img.icons8.com/color/48/wireshark.png',
+        metasploit: 'https://img.icons8.com/color/48/security-shield.png',
+        'burp-suite': 'https://img.icons8.com/color/48/bug.png',
+        
+        // Programming
+        terminal: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/utilities-terminal.svg',
+        neovim: 'https://img.icons8.com/color/48/console.png',
+        nvim: 'https://img.icons8.com/color/48/console.png',
+        vscode: 'https://img.icons8.com/color/48/visual-studio-code-2019.png',
+        'code-editor': 'https://img.icons8.com/color/48/visual-studio-code-2019.png',
+        'git-gui': 'https://img.icons8.com/color/48/git.png',
+        
         // System Tools
         files: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/system-file-manager.svg',
         'file-manager': 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/system-file-manager.svg',
-        calculator: 'https://img.icons8.com/color/48/calculator.png',
-        settings: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/preferences-system.svg',
         'system-monitor': 'https://img.icons8.com/color/48/monitor.png',
         monitor: 'https://img.icons8.com/color/48/monitor.png',
+        settings: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/preferences-system.svg',
+        'software-updater': 'https://img.icons8.com/color/48/update.png',
+        
+        // System Services
+        'service-manager': 'https://img.icons8.com/color/48/services.png',
+        'system-logs': 'https://img.icons8.com/color/48/maintenance.png',
+        'backup-tool': 'https://img.icons8.com/color/48/backup.png',
+        firewall: 'https://img.icons8.com/color/48/firewall.png',
+        
+        // Accessories
+        calendar: 'https://img.icons8.com/color/48/calendar.png',
+        
+        // Universal Access
+        'screen-magnifier': 'https://img.icons8.com/color/48/search.png',
+        'screen-reader': 'https://img.icons8.com/color/48/audio.png',
+        'on-screen-keyboard': 'https://img.icons8.com/color/48/keyboard.png',
+        'high-contrast': 'https://img.icons8.com/color/48/contrast.png',
         
         // Personal
         portfolio: '/icons/UserPortafolio.ico',
@@ -220,37 +322,34 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
       },
       minimizeApp: (id) => {
         setActiveWindows(prev => prev.map(window => 
-          window.id === id ? { ...window, minimized: true } : window
+          window.id === id ? { ...window, minimized: !window.minimized } : window
         ));
-        if (activeApp === id) {
-          const nextWindow = activeWindows.find(w => w.id !== id && !w.minimized);
-          setActiveApp(nextWindow ? nextWindow.id : null);
-        }
       },
       maximizeApp: (id) => {
         const window = activeWindows.find(w => w.id === id);
         const isMobile = window?.isMobile || window.innerWidth <= 768;
+        const isMaximized = window.size.width === '95%' || window.size.width === '98vw';
         
-        setActiveWindows(prev => prev.map(window => 
-          window.id === id ? { 
-            ...window, 
-            size: isMobile ? { width: '98vw', height: '90vh' } : { width: '95%', height: '90%' },
-            position: isMobile ? { x: '1vw', y: '2vh' } : { x: '2.5%', y: '5%' }
-          } : window
-        ));
-      },
-      restoreApp: (id) => {
-        const window = activeWindows.find(w => w.id === id);
-        const isMobile = window?.isMobile || window.innerWidth <= 768;
-        const defaultSize = isMobile ? getMobileSize(window.appName) : getDefaultSize(window.appName);
-        
-        setActiveWindows(prev => prev.map(window => 
-          window.id === id ? { 
-            ...window, 
-            size: defaultSize,
-            position: isMobile ? { x: '2.5vw', y: '5vh' } : { x: 100, y: 100 }
-          } : window
-        ));
+        if (isMaximized) {
+          // Restaurar
+          const defaultSize = isMobile ? getMobileSize(window.appName) : getDefaultSize(window.appName);
+          setActiveWindows(prev => prev.map(w => 
+            w.id === id ? { 
+              ...w, 
+              size: defaultSize,
+              position: isMobile ? { x: '2.5vw', y: '5vh' } : { x: 100, y: 100 }
+            } : w
+          ));
+        } else {
+          // Maximizar
+          setActiveWindows(prev => prev.map(w => 
+            w.id === id ? { 
+              ...w, 
+              size: isMobile ? { width: '98vw', height: '90vh' } : { width: '95%', height: '90%' },
+              position: isMobile ? { x: '1vw', y: '2vh' } : { x: '2.5%', y: '5%' }
+            } : w
+          ));
+        }
       },
       focusApp: (id) => {
         setActiveApp(id);
@@ -377,26 +476,29 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
     })));
   };
 
+  // FUNCIONES CORREGIDAS PARA LOS BOTONES
   const handleMinimize = (id, e) => {
     e.stopPropagation();
-    window.windowManager.minimizeApp(id);
+    e.preventDefault();
+    if (window.windowManager && window.windowManager.minimizeApp) {
+      window.windowManager.minimizeApp(id);
+    }
   };
 
   const handleMaximize = (id, e) => {
     e.stopPropagation();
-    const window = activeWindows.find(w => w.id === id);
-    const isMaximized = window.size.width === '95%' || window.size.width === '98vw';
-    
-    if (isMaximized) {
-      window.windowManager.restoreApp(id);
-    } else {
+    e.preventDefault();
+    if (window.windowManager && window.windowManager.maximizeApp) {
       window.windowManager.maximizeApp(id);
     }
   };
 
   const handleClose = (id, e) => {
     e.stopPropagation();
-    window.windowManager.closeApp(id);
+    e.preventDefault();
+    if (window.windowManager && window.windowManager.closeApp) {
+      window.windowManager.closeApp(id);
+    }
   };
 
   return (
@@ -415,35 +517,40 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
             left: window.position.x,
             top: window.position.y,
             width: window.size.width,
-            height: window.size.height
+            height: window.size.height,
+            display: window.minimized ? 'none' : 'flex'
           }}
           onClick={() => bringToFront(window.id)}
           onTouchStart={() => bringToFront(window.id)}
         >
+          {/* HEADER ESTILO PARROT OS */}
           <div 
             className="window-header"
             onMouseDown={(e) => handleDragStart(window.id, e)}
             onTouchStart={(e) => handleDragStart(window.id, e)}
           >
-            <div className="window-title">
-              {window.title}
+            <div className="window-title-section">
+              <img src={window.icon} alt="" className="window-title-icon" />
+              <div className="window-title">
+                {window.title}
+              </div>
             </div>
             <div className="window-controls">
               <button 
                 onClick={(e) => handleMinimize(window.id, e)}
                 onTouchEnd={(e) => handleMinimize(window.id, e)}
                 title="Minimizar"
-                className="control-button"
+                className="control-button minimize-button"
               >
-                _
+                <span className="control-dot"></span>
               </button>
               <button 
                 onClick={(e) => handleMaximize(window.id, e)}
                 onTouchEnd={(e) => handleMaximize(window.id, e)}
-                title={window.size.width === '95%' || window.size.width === '98vw' ? 'Restaurar' : 'Maximizar'}
-                className="control-button"
+                title="Maximizar"
+                className="control-button maximize-button"
               >
-                {window.size.width === '95%' || window.size.width === '98vw' ? '❐' : '□'}
+                <span className="control-dot"></span>
               </button>
               <button 
                 onClick={(e) => handleClose(window.id, e)}
@@ -451,7 +558,7 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
                 title="Cerrar"
                 className="control-button close-button"
               >
-                ×
+                <span className="control-dot"></span>
               </button>
             </div>
           </div>
@@ -477,9 +584,9 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         .window {
           position: absolute;
           background: var(--window-bg);
-          border: 2px solid var(--parrot-green);
-          border-radius: var(--radius-lg);
-          box-shadow: var(--shadow-xl);
+          border: 1px solid #3a3f4b;
+          border-radius: 8px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
           display: flex;
           flex-direction: column;
           pointer-events: all;
@@ -491,8 +598,8 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         
         /* Tamaños para desktop */
         .window.desktop {
-          min-width: min(300px, 90vw);
-          min-height: min(200px, 50vh);
+          min-width: min(400px, 90vw);
+          min-height: min(300px, 50vh);
           max-width: 95vw;
           max-height: 90vh;
         }
@@ -503,49 +610,49 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           min-height: 50vh;
           max-width: 98vw;
           max-height: 90vh;
-          border-width: 3px;
-          border-radius: var(--radius-xl);
+          border-width: 1px;
+          border-radius: 12px;
         }
         
         .window.minimized {
-          display: none;
+          display: none !important;
         }
         
         .window.active {
-          border-color: var(--primary-cyan);
+          border-color: #4a5568;
           box-shadow: 
-            var(--shadow-xl),
-            0 0 0 2px var(--primary-cyan);
+            0 12px 40px rgba(0, 0, 0, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
         }
         
         .window-dragging {
           opacity: 0.95;
           cursor: grabbing !important;
           box-shadow: 
-            var(--shadow-xl),
-            0 0 40px rgba(30, 138, 74, 0.5),
-            0 0 0 3px var(--primary-cyan);
+            0 16px 48px rgba(0, 0, 0, 0.5),
+            0 0 0 1px rgba(255, 255, 255, 0.15);
           transition: none;
           z-index: 9999 !important;
         }
         
+        /* HEADER ESTILO PARROT OS */
         .window-header {
-          background: linear-gradient(90deg, var(--parrot-green), #16a085);
-          padding: var(--space-sm) var(--space-md);
+          background: #2F343F;
+          padding: 8px 12px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+          border-bottom: 1px solid #3a3f4b;
           cursor: grab;
           user-select: none;
           touch-action: none;
-          min-height: 2.5rem;
-          gap: var(--space-sm);
+          min-height: 36px;
+          gap: 12px;
         }
         
         .window.mobile .window-header {
-          min-height: 3rem;
-          padding: var(--space-md);
+          min-height: 44px;
+          padding: 12px 16px;
           cursor: default;
         }
         
@@ -553,38 +660,51 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           cursor: grabbing;
         }
         
+        .window-title-section {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex: 1;
+          min-width: 0;
+        }
+        
+        .window-title-icon {
+          width: 16px;
+          height: 16px;
+          object-fit: contain;
+          flex-shrink: 0;
+        }
+        
         .window-title {
-          color: #fff;
-          font-size: var(--text-sm);
-          font-weight: bold;
+          color: #e2e8f0;
+          font-size: 13px;
+          font-weight: 500;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          flex: 1;
           font-family: 'Ubuntu', sans-serif;
+          letter-spacing: 0.2px;
         }
         
         .window.mobile .window-title {
-          font-size: var(--text-base);
+          font-size: 14px;
         }
         
         .window-controls {
           display: flex;
-          gap: var(--space-xs);
+          gap: 6px;
           flex-shrink: 0;
         }
         
         .window.mobile .window-controls {
-          gap: var(--space-sm);
+          gap: 8px;
         }
         
         .control-button {
-          background: rgba(255, 255, 255, 0.2);
+          background: none;
           border: none;
-          color: #fff;
-          border-radius: var(--radius-sm);
+          border-radius: 50%;
           cursor: pointer;
-          font-size: var(--text-xs);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -592,31 +712,69 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           font-family: 'Ubuntu Mono', monospace;
           font-weight: bold;
           touch-action: manipulation;
+          position: relative;
+          padding: 0;
         }
         
         .window.desktop .control-button {
-          width: clamp(18px, 4vw, 22px);
-          height: clamp(18px, 4vw, 22px);
+          width: 12px;
+          height: 12px;
         }
         
         .window.mobile .control-button {
-          width: 2.5rem;
-          height: 2.5rem;
-          font-size: var(--text-lg);
-          border-radius: var(--radius-md);
+          width: 16px;
+          height: 16px;
         }
         
-        .control-button:hover {
-          background: rgba(255, 255, 255, 0.3);
-          transform: scale(1.1);
+        .control-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          transition: all 0.2s ease;
+        }
+        
+        .window.desktop .control-dot {
+          width: 6px;
+          height: 6px;
+        }
+        
+        .window.mobile .control-dot {
+          width: 10px;
+          height: 10px;
+        }
+        
+        /* Botón Minimizar - NARANJA */
+        .minimize-button .control-dot {
+          background: #f6ad55;
+        }
+        
+        .minimize-button:hover .control-dot {
+          background: #fbd38d;
+          transform: scale(1.2);
+        }
+        
+        /* Botón Maximizar - VERDE */
+        .maximize-button .control-dot {
+          background: #68d391;
+        }
+        
+        .maximize-button:hover .control-dot {
+          background: #9ae6b4;
+          transform: scale(1.2);
+        }
+        
+        /* Botón Cerrar - ROJO */
+        .close-button .control-dot {
+          background: #fc8181;
+        }
+        
+        .close-button:hover .control-dot {
+          background: #feb2b2;
+          transform: scale(1.2);
         }
         
         .control-button:active {
-          transform: scale(0.95);
-        }
-        
-        .close-button:hover {
-          background: rgba(239, 68, 68, 0.8);
+          transform: scale(0.9);
         }
         
         .window-content {
@@ -641,38 +799,41 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           justify-content: center;
           text-align: center;
           color: var(--text-primary);
+          background: #1a202c;
         }
 
         .app-content h2 {
-          color: var(--primary-cyan);
+          color: #e2e8f0;
           margin-bottom: var(--space-md);
           font-size: var(--text-xl);
+          font-weight: 600;
         }
 
         .app-content p {
-          color: var(--text-secondary);
+          color: #a0aec0;
           font-size: var(--text-md);
+          max-width: 400px;
+          line-height: 1.5;
         }
 
         .window.mobile .app-content {
           padding: var(--space-md);
         }
 
-        /* Responsive Design Mejorado */
+        /* Responsive Design */
         @media (max-width: 768px) {
           .window.desktop {
             min-width: 85vw;
             min-height: 50vh;
-            border-width: 3px;
           }
           
           .window-header {
-            padding: var(--space-md);
-            min-height: 3rem;
+            padding: 10px 14px;
+            min-height: 40px;
           }
           
           .window-title {
-            font-size: var(--text-base);
+            font-size: 14px;
           }
         }
 
@@ -680,40 +841,25 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           .window.mobile {
             min-width: 92vw;
             min-height: 60vh;
-            border-width: 2px;
           }
           
           .window-header {
-            padding: 0.75rem 1rem;
-            min-height: 2.75rem;
+            padding: 8px 12px;
+            min-height: 36px;
           }
           
           .window.mobile .control-button {
-            width: 2.25rem;
-            height: 2.25rem;
-            font-size: var(--text-base);
+            width: 14px;
+            height: 14px;
+          }
+          
+          .window.mobile .control-dot {
+            width: 8px;
+            height: 8px;
           }
         }
 
-        @media (max-width: 320px) {
-          .window.mobile {
-            min-width: 96vw;
-            min-height: 65vh;
-          }
-          
-          .window-header {
-            padding: 0.5rem 0.75rem;
-            min-height: 2.5rem;
-          }
-          
-          .window.mobile .control-button {
-            width: 2rem;
-            height: 2rem;
-            font-size: var(--text-sm);
-          }
-        }
-
-        /* Scrollbars para móvil */
+        /* Scrollbars */
         .window-content::-webkit-scrollbar {
           width: 6px;
         }
@@ -723,47 +869,16 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         }
 
         .window-content::-webkit-scrollbar-track {
-          background: var(--surface-bg);
+          background: #2d3748;
         }
 
         .window-content::-webkit-scrollbar-thumb {
-          background: var(--border-color);
+          background: #4a5568;
           border-radius: 3px;
         }
 
         .window-content::-webkit-scrollbar-thumb:hover {
-          background: var(--primary-cyan);
-        }
-
-        /* Mejoras para touch en móvil */
-        @media (hover: none) and (pointer: coarse) {
-          .control-button:hover {
-            transform: none;
-            background: rgba(255, 255, 255, 0.2);
-          }
-          
-          .window-header {
-            cursor: default;
-          }
-        }
-
-        /* Reduced motion support */
-        @media (prefers-reduced-motion: reduce) {
-          .window,
-          .control-button {
-            transition: none;
-          }
-        }
-
-        /* High contrast mode */
-        @media (prefers-contrast: high) {
-          .window {
-            border-width: 3px;
-          }
-          
-          .window-dragging {
-            border-width: 4px;
-          }
+          background: #718096;
         }
       `}</style>
     </div>

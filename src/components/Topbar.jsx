@@ -22,9 +22,9 @@ export default function Topbar() {
       name: "Privacy",
       icon: "🔒",
       apps: [
-        { id: 'tor', name: 'Tor Browser', icon: 'https://img.icons8.com/color/48/tor-project.png' },
+        { id: 'tor', name: 'Tor Browser', icon: 'https://img.icons8.com/?size=100&id=hLMTBGNK3SyO&format=png&color=000000' },
         { id: 'vpn', name: 'VPN Client', icon: 'https://img.icons8.com/color/48/vpn.png' },
-        { id: 'encryption', name: 'File Encryption', icon: 'https://img.icons8.com/color/48/encryption.png' },
+        { id: 'encryption', name: 'File Encryption', icon: 'https://img.icons8.com/?size=100&id=vhelEx8inlrI&format=png&color=000000' },
         { id: 'password', name: 'Password Manager', icon: 'https://img.icons8.com/color/48/password.png' }
       ]
     },
@@ -34,7 +34,7 @@ export default function Topbar() {
       apps: [
         { id: 'writer', name: 'Text Editor', icon: 'https://img.icons8.com/color/48/document.png' },
         { id: 'calc', name: 'Calculator', icon: 'https://img.icons8.com/color/48/calculator.png' },
-        { id: 'spreadsheet', name: 'Spreadsheet', icon: 'https://img.icons8.com/color/48/spreadsheet.png' },
+        { id: 'spreadsheet', name: 'Spreadsheet', icon: 'https://img.icons8.com/?size=100&id=20830&format=png&color=000000' },
         { id: 'pdf', name: 'PDF Reader', icon: 'https://img.icons8.com/color/48/pdf.png' }
       ]
     },
@@ -42,7 +42,7 @@ export default function Topbar() {
       name: "Internet",
       icon: "🌐",
       apps: [
-        { id: 'browser', name: 'Web Browser', icon: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/firefox.svg' },
+        { id: 'browser', name: 'FireFox', icon: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/firefox.svg' },
         { id: 'youtube', name: 'YouTube', icon: 'https://img.icons8.com/color/48/youtube-play.png' },
         { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/48/spotify--v1.png' },
         { id: 'chromedragon', name: 'Chrome Dragon', icon: 'https://img.icons8.com/?size=100&id=XypsZnOAIrci&format=png&color=000000' }
@@ -82,10 +82,10 @@ export default function Topbar() {
       name: "Pentesting",
       icon: "🛡️",
       apps: [
-        { id: 'nmap', name: 'Network Scanner', icon: 'https://img.icons8.com/color/48/network.png' },
-        { id: 'wireshark', name: 'Wireshark', icon: 'https://img.icons8.com/color/48/wireshark.png' },
-        { id: 'metasploit', name: 'Metasploit', icon: 'https://img.icons8.com/color/48/console.png' },
-        { id: 'burp', name: 'Burp Suite', icon: 'https://img.icons8.com/color/48/security-checked.png' }
+        { id: 'nmap', name: 'Network Scanner', icon: './icons/UserNetworkScanner.png' },
+        { id: 'wireshark', name: 'Wireshark', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Wireshark_icon_new.png' },
+        { id: 'metasploit', name: 'Metasploit', icon: 'https://img.icons8.com/?size=100&id=97AFS4JiW8vx&format=png&color=000000' },
+        { id: 'burp', name: 'Burp Suite', icon: './icons/UserBurpSuite.ico' }
       ]
     },
     programming: {
@@ -104,8 +104,8 @@ export default function Topbar() {
       apps: [
         { id: 'files', name: 'File Manager', icon: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/system-file-manager.svg' },
         { id: 'monitor', name: 'System Monitor', icon: 'https://img.icons8.com/color/48/monitor.png' },
-        { id: 'settings', name: 'Settings', icon: 'https://img.icons8.com/?size=100&id=83456&format=png&color=000000' },
-        { id: 'updater', name: 'Software Updater', icon: 'https://img.icons8.com/color/48/update.png' }
+        { id: 'settings', name: 'Settings', icon: 'https://img.icons8.com/?size=100&id=12784&format=png&color=000000' },
+        { id: 'updater', name: 'Software Updater', icon: 'https://img.icons8.com/?size=100&id=wLgsZitlWmzO&format=png&color=000000' }
       ]
     },
     services: {
@@ -114,7 +114,7 @@ export default function Topbar() {
       apps: [
         { id: 'services', name: 'Service Manager', icon: 'https://img.icons8.com/color/48/services.png' },
         { id: 'logs', name: 'System Logs', icon: 'https://img.icons8.com/color/48/maintenance.png' },
-        { id: 'backup', name: 'Backup Tool', icon: 'https://img.icons8.com/color/48/backup.png' },
+        { id: 'backup', name: 'Backup Tool', icon: './icons/UserBackupTool.png' },
         { id: 'firewall', name: 'Firewall Config', icon: 'https://img.icons8.com/color/48/firewall.png' }
       ]
     },
@@ -132,10 +132,10 @@ export default function Topbar() {
       name: "Universal Access",
       icon: "♿",
       apps: [
-        { id: 'magnifier', name: 'Screen Magnifier', icon: 'https://img.icons8.com/color/48/magnifying-glass.png' },
-        { id: 'reader', name: 'Screen Reader', icon: 'https://img.icons8.com/color/48/audio.png' },
+        { id: 'magnifier', name: 'Screen Magnifier', icon: 'https://img.icons8.com/?size=100&id=s9g93QuMnUPE&format=png&color=000000' },
+        { id: 'reader', name: 'Screen Reader', icon: 'https://img.icons8.com/?size=100&id=u0R1sbtKdYC6&format=png&color=000000' },
         { id: 'keyboard', name: 'On-Screen Keyboard', icon: 'https://img.icons8.com/color/48/keyboard.png' },
-        { id: 'highcontrast', name: 'High Contrast', icon: 'https://img.icons8.com/color/48/contrast.png' }
+        { id: 'highcontrast', name: 'High Contrast', icon: 'https://img.icons8.com/?size=100&id=2oDjYHY9ZT8s&format=png&color=000000' }
       ]
     }
   };
@@ -318,7 +318,7 @@ export default function Topbar() {
             <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/system-file-manager.svg" alt="Files" />
           </div>
           <div className="quick-app" onClick={() => handleAppClick('settings')} title="Settings">
-            <img src="https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/preferences-system.svg" alt="Settings" />
+            <img src="https://img.icons8.com/?size=100&id=12784&format=png&color=000000" alt="Settings" />
           </div>
         </div>
       </div>

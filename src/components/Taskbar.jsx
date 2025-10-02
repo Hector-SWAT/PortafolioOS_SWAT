@@ -194,12 +194,7 @@ const Taskbar = ({
           ))}
         </div>
 
-        {/* Área del sistema */}
-        <div className="taskbar-system">
-          <div className="system-time">
-            {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </div>
-        </div>
+        
 
         <style jsx>{`
           .taskbar {
