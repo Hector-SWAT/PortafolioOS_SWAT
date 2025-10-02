@@ -16,26 +16,26 @@ export default function Topbar() {
   const volumeRef = useRef(null);
   const resourceRef = useRef(null);
 
-  // Categorías organizadas según tu solicitud
+  // Categorías organizadas con IDs CORREGIDOS para que funcionen con WindowManager
   const menuCategories = {
     privacy: {
       name: "Privacy",
       icon: "🔒",
       apps: [
-        { id: 'tor', name: 'Tor Browser', icon: 'https://img.icons8.com/?size=100&id=hLMTBGNK3SyO&format=png&color=000000' },
-        { id: 'vpn', name: 'VPN Client', icon: 'https://img.icons8.com/color/48/vpn.png' },
-        { id: 'encryption', name: 'File Encryption', icon: 'https://img.icons8.com/?size=100&id=vhelEx8inlrI&format=png&color=000000' },
-        { id: 'password', name: 'Password Manager', icon: 'https://img.icons8.com/color/48/password.png' }
+        { id: 'tor-browser', name: 'Tor Browser', icon: 'https://img.icons8.com/?size=100&id=hLMTBGNK3SyO&format=png&color=000000' },
+        { id: 'vpn-client', name: 'VPN Client', icon: 'https://img.icons8.com/color/48/vpn.png' },
+        { id: 'file-encryption', name: 'File Encryption', icon: 'https://img.icons8.com/?size=100&id=vhelEx8inlrI&format=png&color=000000' },
+        { id: 'password-manager', name: 'Password Manager', icon: 'https://img.icons8.com/color/48/password.png' }
       ]
     },
     office: {
       name: "Office",
       icon: "📊",
       apps: [
-        { id: 'writer', name: 'Text Editor', icon: 'https://img.icons8.com/color/48/document.png' },
-        { id: 'calc', name: 'Calculator', icon: 'https://img.icons8.com/color/48/calculator.png' },
+        { id: 'text-editor', name: 'Text Editor', icon: 'https://img.icons8.com/color/48/document.png' },
+        { id: 'calculator', name: 'Calculator', icon: 'https://img.icons8.com/color/48/calculator.png' },
         { id: 'spreadsheet', name: 'Spreadsheet', icon: 'https://img.icons8.com/?size=100&id=20830&format=png&color=000000' },
-        { id: 'pdf', name: 'PDF Reader', icon: 'https://img.icons8.com/color/48/pdf.png' }
+        { id: 'pdf-reader', name: 'PDF Reader', icon: 'https://img.icons8.com/color/48/pdf.png' }
       ]
     },
     internet: {
@@ -85,7 +85,7 @@ export default function Topbar() {
         { id: 'nmap', name: 'Network Scanner', icon: './icons/UserNetworkScanner.png' },
         { id: 'wireshark', name: 'Wireshark', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Wireshark_icon_new.png' },
         { id: 'metasploit', name: 'Metasploit', icon: 'https://img.icons8.com/?size=100&id=97AFS4JiW8vx&format=png&color=000000' },
-        { id: 'burp', name: 'Burp Suite', icon: './icons/UserBurpSuite.ico' }
+        { id: 'burp-suite', name: 'Burp Suite', icon: './icons/UserBurpSuite.ico' }
       ]
     },
     programming: {
@@ -93,9 +93,9 @@ export default function Topbar() {
       icon: "💻",
       apps: [
         { id: 'terminal', name: 'Terminal', icon: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/utilities-terminal.svg' },
-        { id: 'nvim', name: 'Neovim', icon: './icons/UserNvim.ico' },
+        { id: 'neovim', name: 'Neovim', icon: './icons/UserNvim.ico' },
         { id: 'vscode', name: 'Code Editor', icon: 'https://img.icons8.com/color/48/visual-studio-code-2019.png' },
-        { id: 'git', name: 'Git GUI', icon: 'https://img.icons8.com/color/48/git.png' }
+        { id: 'git-gui', name: 'Git GUI', icon: 'https://img.icons8.com/color/48/git.png' }
       ]
     },
     system: {
@@ -105,16 +105,16 @@ export default function Topbar() {
         { id: 'files', name: 'File Manager', icon: 'https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/Papirus/32x32/apps/system-file-manager.svg' },
         { id: 'monitor', name: 'System Monitor', icon: 'https://img.icons8.com/color/48/monitor.png' },
         { id: 'settings', name: 'Settings', icon: 'https://img.icons8.com/?size=100&id=12784&format=png&color=000000' },
-        { id: 'updater', name: 'Software Updater', icon: 'https://img.icons8.com/?size=100&id=wLgsZitlWmzO&format=png&color=000000' }
+        { id: 'software-updater', name: 'Software Updater', icon: 'https://img.icons8.com/?size=100&id=wLgsZitlWmzO&format=png&color=000000' }
       ]
     },
     services: {
       name: "System Services",
       icon: "🔧",
       apps: [
-        { id: 'services', name: 'Service Manager', icon: 'https://img.icons8.com/color/48/services.png' },
-        { id: 'logs', name: 'System Logs', icon: 'https://img.icons8.com/color/48/maintenance.png' },
-        { id: 'backup', name: 'Backup Tool', icon: './icons/UserBackupTool.png' },
+        { id: 'service-manager', name: 'Service Manager', icon: 'https://img.icons8.com/color/48/services.png' },
+        { id: 'system-logs', name: 'System Logs', icon: 'https://img.icons8.com/color/48/maintenance.png' },
+        { id: 'backup-tool', name: 'Backup Tool', icon: './icons/UserBackupTool.png' },
         { id: 'firewall', name: 'Firewall Config', icon: 'https://img.icons8.com/color/48/firewall.png' }
       ]
     },
@@ -122,7 +122,7 @@ export default function Topbar() {
       name: "Accessories",
       icon: "📁",
       apps: [
-        { id: 'notes', name: 'Text Editor', icon: 'https://img.icons8.com/color/48/note.png' },
+        { id: 'text-editor', name: 'Text Editor', icon: 'https://img.icons8.com/color/48/document.png' },
         { id: 'calendar', name: 'Calendar', icon: 'https://img.icons8.com/color/48/calendar.png' },
         { id: 'calculator', name: 'Calculator', icon: 'https://img.icons8.com/color/48/calculator.png' },
         { id: 'screenshot', name: 'Screenshot', icon: 'https://img.icons8.com/color/48/screenshot.png' }
@@ -132,10 +132,10 @@ export default function Topbar() {
       name: "Universal Access",
       icon: "♿",
       apps: [
-        { id: 'magnifier', name: 'Screen Magnifier', icon: 'https://img.icons8.com/?size=100&id=s9g93QuMnUPE&format=png&color=000000' },
-        { id: 'reader', name: 'Screen Reader', icon: 'https://img.icons8.com/?size=100&id=u0R1sbtKdYC6&format=png&color=000000' },
-        { id: 'keyboard', name: 'On-Screen Keyboard', icon: 'https://img.icons8.com/color/48/keyboard.png' },
-        { id: 'highcontrast', name: 'High Contrast', icon: 'https://img.icons8.com/?size=100&id=2oDjYHY9ZT8s&format=png&color=000000' }
+        { id: 'screen-magnifier', name: 'Screen Magnifier', icon: 'https://img.icons8.com/?size=100&id=s9g93QuMnUPE&format=png&color=000000' },
+        { id: 'screen-reader', name: 'Screen Reader', icon: 'https://img.icons8.com/?size=100&id=u0R1sbtKdYC6&format=png&color=000000' },
+        { id: 'on-screen-keyboard', name: 'On-Screen Keyboard', icon: 'https://img.icons8.com/color/48/keyboard.png' },
+        { id: 'high-contrast', name: 'High Contrast', icon: 'https://img.icons8.com/?size=100&id=2oDjYHY9ZT8s&format=png&color=000000' }
       ]
     }
   };
@@ -222,8 +222,11 @@ export default function Topbar() {
   };
 
   const handleAppClick = (appId) => {
-    if (window.windowManager) {
+    console.log('🖱️ Opening app:', appId);
+    if (window.windowManager && window.windowManager.openApp) {
       window.windowManager.openApp(appId);
+    } else {
+      console.error('❌ WindowManager not found');
     }
     setIsStartMenuOpen(false);
     setActiveCategory(null);
@@ -248,7 +251,7 @@ export default function Topbar() {
               height: '24px',
               filter: 'none',
               opacity: '1'
-            }} />
+            }}/>
             <span>Applications</span>
           </button>
 
@@ -268,11 +271,7 @@ export default function Topbar() {
                   >
                     <span className="category-icon">{category.icon}</span>
                     <span className="category-name">{category.name}</span>
-                    <img 
-                      src="https://img.icons8.com/?size=100&id=85837&format=png&color=000000" 
-                      alt="arrow"
-                      className={`category-arrow ${activeCategory === key ? 'rotated' : ''}`}
-                    />
+                    <span className={`category-arrow ${activeCategory === key ? 'rotated' : ''}`}>›</span>
                   </button>
                 ))}
               </div>
@@ -413,12 +412,12 @@ export default function Topbar() {
       <div className="topbar-right">
         <div className="system-tray">
           <div className="tray-icon" title="Ethernet Connection">
-            <img src="https://img.icons8.com/?size=100&id=43824&format=png&color=FFFFFF" alt="Ethernet" />
+            <img src="https://img.icons8.com/color/48/ethernet-on.png" alt="Ethernet" />
           </div>
 
           <div className="tray-icon volume-control" ref={volumeRef} title="Volume Control">
             <img
-              src="https://img.icons8.com/?size=100&id=8EyaKMqDrrMI&format=png&color=FFFFFF"
+              src="https://img.icons8.com/?size=100&id=41037&format=png&color=000000"
               alt="Volume"
               onClick={toggleVolumeSlider}
             />
@@ -624,11 +623,9 @@ export default function Topbar() {
         }
 
         .category-arrow {
-          width: 12px;
-          height: 12px;
+          font-size: 16px;
           opacity: 0.7;
           transition: transform 0.2s ease;
-          filter: brightness(0) invert(1);
         }
 
         .category-arrow.rotated {
@@ -689,7 +686,7 @@ export default function Topbar() {
           text-align: center;
         }
 
-        /* PANEL VACÍO - Reemplaza al welcome panel */
+        /* PANEL VACÍO */
         .empty-panel {
           display: flex;
           flex-direction: column;

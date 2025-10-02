@@ -128,7 +128,7 @@ export default function Loader({ children }) {
           "⚠️  System alerts detected - Type 'notifications' to view",
           "",
           "swat-system login: root (automatic login)",
-          "Last login: Fri Dec 1 14:30:25 on tty1",
+          "Last login: Fri Dec 1 14:30:25 on tty1 Usar para iniciar DEMO: (((startx)))",
           ""
         ]);
       }, 500);

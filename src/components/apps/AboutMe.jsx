@@ -9,13 +9,13 @@ const AboutMe = ({ windowId }) => {
     title: "Cybersecurity Enthusiast & Full Stack Developer",
     location: "México",
     email: "hectorhernadez51@gmail.com",
-    age: "20 años",
-    bio: "I'm a 20-year-old cybersecurity enthusiast from Mexico, transitioning from software development to the exciting world of information security. My programming background in Java and Python gives me a unique perspective on secure coding practices and vulnerability analysis."
+    age: "22 años",
+    bio: "I'm a 22-year-old cybersecurity enthusiast from Mexico, transitioning from software development to the exciting world of information security. My programming background in Java and Python gives me a unique perspective on secure coding practices and vulnerability analysis."
   };
 
   const experience = [
     {
-      period: "2023 - Presente",
+      period: "2025 - Presente",
       role: "Ethical Hacking & Security Research",
       company: "Self-Study & Platforms",
       description: "Desarrollo de habilidades en ethical hacking a través de TryHackMe y HackTheBox. Estudio para certificaciones de seguridad y práctica de penetration testing."
@@ -38,7 +38,7 @@ const AboutMe = ({ windowId }) => {
     {
       degree: "Transición a Cybersecurity",
       institution: "Self-Taught & Online Platforms",
-      year: "2023 - Presente"
+      year: "2025 - Presente"
     },
     {
       degree: "Desarrollo de Software",

@@ -9,40 +9,43 @@ const Snake = ({ windowId }) => {
   const [speed, setSpeed] = useState(150);
   const [isPaused, setIsPaused] = useState(false);
   const [currentMap, setCurrentMap] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   
   const gameBoardRef = useRef(null);
   const directionRef = useRef(direction);
 
+  // Detectar si es móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Los 3 mapas fáciles
   const maps = [
-    // Mapa 1: Vacío (clásico)
     {
       name: "Clásico",
       walls: []
     },
-    // Mapa 2: Marco simple
     {
       name: "Marco",
       walls: [
-        // Bordes superiores e inferiores
         ...Array(20).fill().map((_, i) => ({ x: i, y: 0 })),
         ...Array(20).fill().map((_, i) => ({ x: i, y: 19 })),
-        // Bordes izquierdo y derecho
         ...Array(18).fill().map((_, i) => ({ x: 0, y: i + 1 })),
         ...Array(18).fill().map((_, i) => ({ x: 19, y: i + 1 }))
       ]
     },
-    // Mapa 3: Cuatro esquinas
     {
       name: "Esquinas",
       walls: [
-        // Esquina superior izquierda
         { x: 5, y: 5 }, { x: 6, y: 5 }, { x: 5, y: 6 },
-        // Esquina superior derecha
         { x: 14, y: 5 }, { x: 13, y: 5 }, { x: 14, y: 6 },
-        // Esquina inferior izquierda
         { x: 5, y: 14 }, { x: 6, y: 14 }, { x: 5, y: 13 },
-        // Esquina inferior derecha
         { x: 14, y: 14 }, { x: 13, y: 14 }, { x: 14, y: 13 }
       ]
     }
@@ -55,7 +58,6 @@ const Snake = ({ windowId }) => {
       y: Math.floor(Math.random() * 20)
     };
 
-    // Verificar que la comida no esté en la serpiente o en un muro
     const isOnSnake = snake.some(segment => 
       segment.x === newFood.x && segment.y === newFood.y
     );
@@ -143,7 +145,23 @@ const Snake = ({ windowId }) => {
     });
   }, [gameOver, isPaused, food, generateFood, speed, currentMap, changeMap]);
 
-  // Controles del teclado
+  // Cambiar dirección (usado por botones táctiles)
+  const changeDirection = useCallback((newDirection) => {
+    if (gameOver || isPaused) return;
+
+    // Prevenir movimiento inverso
+    if (
+      (newDirection === 'UP' && directionRef.current !== 'DOWN') ||
+      (newDirection === 'DOWN' && directionRef.current !== 'UP') ||
+      (newDirection === 'LEFT' && directionRef.current !== 'RIGHT') ||
+      (newDirection === 'RIGHT' && directionRef.current !== 'LEFT')
+    ) {
+      directionRef.current = newDirection;
+      setDirection(newDirection);
+    }
+  }, [gameOver, isPaused]);
+
+  // Controles del teclado (solo para PC)
   const handleKeyDown = useCallback((e) => {
     if (gameOver) {
       if (e.key === ' ' || e.key === 'Enter') {
@@ -159,33 +177,21 @@ const Snake = ({ windowId }) => {
 
     switch (e.key) {
       case 'ArrowUp':
-        if (directionRef.current !== 'DOWN') {
-          directionRef.current = 'UP';
-          setDirection('UP');
-        }
+        changeDirection('UP');
         break;
       case 'ArrowDown':
-        if (directionRef.current !== 'UP') {
-          directionRef.current = 'DOWN';
-          setDirection('DOWN');
-        }
+        changeDirection('DOWN');
         break;
       case 'ArrowLeft':
-        if (directionRef.current !== 'RIGHT') {
-          directionRef.current = 'LEFT';
-          setDirection('LEFT');
-        }
+        changeDirection('LEFT');
         break;
       case 'ArrowRight':
-        if (directionRef.current !== 'LEFT') {
-          directionRef.current = 'RIGHT';
-          setDirection('RIGHT');
-        }
+        changeDirection('RIGHT');
         break;
       default:
         break;
     }
-  }, [gameOver, initGame]);
+  }, [gameOver, initGame, changeDirection]);
 
   // Efecto para el game loop
   useEffect(() => {
@@ -193,18 +199,20 @@ const Snake = ({ windowId }) => {
     return () => clearInterval(gameInterval);
   }, [moveSnake, speed]);
 
-  // Efecto para los controles
+  // Efecto para los controles de teclado (solo PC)
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
+    if (!isMobile) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [handleKeyDown, isMobile]);
 
   // Efecto para enfocar el tablero
   useEffect(() => {
-    if (gameBoardRef.current) {
+    if (gameBoardRef.current && !isMobile) {
       gameBoardRef.current.focus();
     }
-  }, []);
+  }, [isMobile]);
 
   // Renderizar el tablero
   const renderBoard = () => {
@@ -232,6 +240,47 @@ const Snake = ({ windowId }) => {
     return board;
   };
 
+  // Botones de control para móvil
+  const MobileControls = () => (
+    <div className="mobile-controls">
+      <div className="controls-row">
+        <button 
+          className="control-btn up-btn"
+          onClick={() => changeDirection('UP')}
+          disabled={gameOver || isPaused}
+        >
+          ↑
+        </button>
+      </div>
+      <div className="controls-row">
+        <button 
+          className="control-btn left-btn"
+          onClick={() => changeDirection('LEFT')}
+          disabled={gameOver || isPaused}
+        >
+          ←
+        </button>
+        <div className="control-spacer"></div>
+        <button 
+          className="control-btn right-btn"
+          onClick={() => changeDirection('RIGHT')}
+          disabled={gameOver || isPaused}
+        >
+          →
+        </button>
+      </div>
+      <div className="controls-row">
+        <button 
+          className="control-btn down-btn"
+          onClick={() => changeDirection('DOWN')}
+          disabled={gameOver || isPaused}
+        >
+          ↓
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="snake-game" ref={gameBoardRef} tabIndex={0}>
       <div className="game-header">
@@ -242,13 +291,39 @@ const Snake = ({ windowId }) => {
         </div>
         <div className="controls-info">
           {isPaused && <div className="paused">PAUSADO</div>}
-          <div>Flechas para mover • Espacio para pausa</div>
+          <div>
+            {isMobile ? (
+              "Usa los botones para mover"
+            ) : (
+              "Flechas para mover • Espacio para pausa"
+            )}
+          </div>
         </div>
       </div>
 
       <div className="game-board">
         {renderBoard()}
       </div>
+
+      {/* Botones de acción */}
+      <div className="action-buttons">
+        <button 
+          onClick={() => setIsPaused(!isPaused)}
+          className="action-btn pause-btn"
+          disabled={gameOver}
+        >
+          {isPaused ? '▶️' : '⏸️'}
+        </button>
+        <button 
+          onClick={initGame}
+          className="action-btn restart-btn"
+        >
+          🔄
+        </button>
+      </div>
+
+      {/* Controles móviles */}
+      {isMobile && <MobileControls />}
 
       {gameOver && (
         <div className="game-over">
@@ -274,13 +349,15 @@ const Snake = ({ windowId }) => {
           outline: none;
           padding: 20px;
           box-sizing: border-box;
+          position: relative;
         }
 
         .game-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          width: 400px;
+          width: 100%;
+          max-width: 400px;
           margin-bottom: 20px;
           background: #2d3748;
           padding: 15px;
@@ -332,6 +409,7 @@ const Snake = ({ windowId }) => {
           border: 2px solid #4a5568;
           border-radius: 4px;
           padding: 2px;
+          margin-bottom: 20px;
         }
 
         .cell {
@@ -359,17 +437,111 @@ const Snake = ({ windowId }) => {
           background: #718096;
         }
 
+        /* Botones de acción */
+        .action-buttons {
+          display: flex;
+          gap: 15px;
+          margin-bottom: 20px;
+        }
+
+        .action-btn {
+          background: #4a5568;
+          border: none;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          font-size: 20px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+        }
+
+        .action-btn:hover:not(:disabled) {
+          background: #718096;
+          transform: scale(1.1);
+        }
+
+        .action-btn:active {
+          transform: scale(0.95);
+        }
+
+        .action-btn:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        /* Controles móviles */
+        .mobile-controls {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .controls-row {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 15px;
+        }
+
+        .control-btn {
+          background: #4a5568;
+          border: none;
+          border-radius: 12px;
+          width: 70px;
+          height: 70px;
+          font-size: 28px;
+          color: white;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+          touch-action: manipulation;
+        }
+
+        .control-btn:hover:not(:disabled) {
+          background: #718096;
+          transform: scale(1.05);
+        }
+
+        .control-btn:active {
+          background: #38a169;
+          transform: scale(0.95);
+        }
+
+        .control-btn:disabled {
+          opacity: 0.4;
+          cursor: not-allowed;
+        }
+
+        .control-spacer {
+          width: 70px;
+        }
+
+        .up-btn, .down-btn {
+          background: #68d391;
+        }
+
+        .left-btn, .right-btn {
+          background: #f6ad55;
+        }
+
         .game-over {
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          background: rgba(0, 0, 0, 0.9);
+          background: rgba(0, 0, 0, 0.95);
           padding: 30px;
           border-radius: 10px;
           text-align: center;
           border: 2px solid #fc8181;
           backdrop-filter: blur(10px);
+          z-index: 100;
         }
 
         .game-over h2 {
@@ -381,8 +553,8 @@ const Snake = ({ windowId }) => {
           background: #68d391;
           color: white;
           border: none;
-          padding: 10px 20px;
-          border-radius: 5px;
+          padding: 12px 24px;
+          border-radius: 8px;
           cursor: pointer;
           font-size: 16px;
           font-weight: bold;
@@ -402,31 +574,54 @@ const Snake = ({ windowId }) => {
 
         /* Responsive */
         @media (max-width: 768px) {
+          .snake-game {
+            padding: 15px 10px;
+            justify-content: flex-start;
+          }
+
           .game-header {
-            width: 320px;
             flex-direction: column;
             gap: 10px;
             text-align: center;
+            max-width: 320px;
+            padding: 12px;
           }
 
           .game-board {
             grid-template-columns: repeat(20, 15px);
             grid-template-rows: repeat(20, 15px);
+            margin-bottom: 15px;
           }
 
           .cell {
             width: 15px;
             height: 15px;
           }
+
+          .control-btn {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+          }
+
+          .control-spacer {
+            width: 60px;
+          }
+
+          .action-btn {
+            width: 45px;
+            height: 45px;
+            font-size: 18px;
+          }
         }
 
         @media (max-width: 480px) {
           .snake-game {
-            padding: 10px;
+            padding: 10px 5px;
           }
 
           .game-header {
-            width: 280px;
+            max-width: 280px;
             padding: 10px;
           }
 
@@ -438,6 +633,35 @@ const Snake = ({ windowId }) => {
           .cell {
             width: 12px;
             height: 12px;
+          }
+
+          .control-btn {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            border-radius: 10px;
+          }
+
+          .control-spacer {
+            width: 50px;
+          }
+
+          .action-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .game-board {
+            grid-template-columns: repeat(20, 10px);
+            grid-template-rows: repeat(20, 10px);
+          }
+
+          .cell {
+            width: 10px;
+            height: 10px;
           }
         }
       `}</style>

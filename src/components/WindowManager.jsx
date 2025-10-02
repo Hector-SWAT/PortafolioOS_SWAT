@@ -6,12 +6,22 @@ import Portfolio from './apps/Portfolio';
 import AboutMe from './apps/AboutMe';
 import Tetris from './apps/Tetris';
 import FlappyBird from './apps/FlappyBird'; 
-import Snake from './apps/Snake'; 
+import Snake from './apps/Snake';
+import TorBrowser from './apps/TorBrowser';
+import VPNClient from './apps/VPNClient';
+import FileEncryption from './apps/FileEncryption';
+import PasswordManager from './apps/PasswordManager';
+import TextEditor from './apps/TextEditor';
+import Calculator from './apps/Calculator';
+import Spreadsheet from './apps/Spreadsheet';
 
 const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setActiveApp }) => {
   const [draggingWindow, setDraggingWindow] = useState(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [windows, setWindows] = useState([]);
+  const [activeWindow, setActiveWindow] = useState(null);
+  const [nextId, setNextId] = useState(1);
 
   // Detectar si es dispositivo táctil
   useEffect(() => {
@@ -28,11 +38,12 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
   useEffect(() => {
     const getAppTitle = (appName) => {
       const titles = {
-        // Privacy
+        // Privacy - AGREGADO PASSWORD MANAGER
         'tor-browser': '🌐 Tor Browser - System SWAT',
-        'vpn-client': '🛡️ VPN Client - System SWAT', 
+        'vpn-client': '🛡️ VPN Client - System SWAT',
         'file-encryption': '🔒 File Encryption - System SWAT',
         'password-manager': '🔑 Password Manager - System SWAT',
+        'passwordmanager': '🔑 Password Manager - System SWAT', // Alias adicional
         
         // Office
         'text-editor': '📝 Text Editor - System SWAT',
@@ -62,9 +73,7 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         
         // Games
         tictactoe: '🎮 Tic Tac Toe - System SWAT',
-        'flappy-bird': '🐦 Flappy Bird - System SWAT',
         flappybird: '🐦 Flappy Bird - System SWAT',
-        'snake-game': '🐍 Snake Game - System SWAT',
         snake: '🐍 Snake Game - System SWAT',
         'nes-emulator': '🎮 NES Emulator - System SWAT',
         nintendo: '🎮 NES Emulator - System SWAT',
@@ -117,38 +126,96 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
 
     const getDefaultSize = (appName) => {
       const sizes = {
+        // Apps principales
         browser: { width: 900, height: 650 },
         terminal: { width: 750, height: 500 },
         tictactoe: { width: 400, height: 500 },
         portfolio: { width: 800, height: 600 },
         about: { width: 600, height: 450 },
-        files: { width: 800, height: 500 },
-        settings: { width: 700, height: 550 },
-        vlc: { width: 800, height: 500 },
-        calculator: { width: 320, height: 420 },
         tetris: { width: 400, height: 500 },
         flappybird: { width: 450, height: 700 },
-        snake: { width: 500, height: 600 }
+        snake: { width: 500, height: 600 },
+        TorBrowser: { width: 900, height: 700 },
+        VPNClient: { width: 600, height: 500 },
+        
+        // PASSWORD MANAGER - TAMAÑOS ESPECÍFICOS
+        'password-manager': { width: 800, height: 600 },
+        'passwordmanager': { width: 800, height: 600 },
+        
+        // Nuevas apps - tamaños por defecto
+        'file-encryption': { width: 500, height: 400 },
+        'text-editor': { width: 700, height: 500 },
+        calculator: { width: 320, height: 420 },
+        spreadsheet: { width: 800, height: 600 },
+        'pdf-reader': { width: 700, height: 600 },
+        youtube: { width: 800, height: 600 },
+        spotify: { width: 400, height: 600 },
+        chromedragon: { width: 900, height: 650 },
+        gimp: { width: 800, height: 600 },
+        inkscape: { width: 800, height: 600 },
+        blender: { width: 900, height: 700 },
+        screenshot: { width: 400, height: 300 },
+        vlc: { width: 800, height: 500 },
+        audacity: { width: 700, height: 500 },
+        camera: { width: 500, height: 400 },
+        gallery: { width: 700, height: 500 },
+        nintendo: { width: 600, height: 500 },
+        nmap: { width: 700, height: 500 },
+        wireshark: { width: 800, height: 600 },
+        metasploit: { width: 750, height: 550 },
+        'burp-suite': { width: 800, height: 600 },
+        neovim: { width: 700, height: 500 },
+        vscode: { width: 900, height: 700 },
+        'git-gui': { width: 600, height: 500 },
+        files: { width: 800, height: 500 },
+        monitor: { width: 700, height: 500 },
+        'software-updater': { width: 500, height: 400 },
+        'service-manager': { width: 600, height: 500 },
+        'system-logs': { width: 700, height: 500 },
+        'backup-tool': { width: 500, height: 450 },
+        firewall: { width: 600, height: 500 },
+        calendar: { width: 400, height: 500 },
+        'screen-magnifier': { width: 500, height: 400 },
+        'screen-reader': { width: 500, height: 400 },
+        'on-screen-keyboard': { width: 600, height: 300 },
+        'high-contrast': { width: 400, height: 300 }
       };
       return sizes[appName] || { width: 700, height: 500 };
     };
 
     const getMobileSize = (appName) => {
       const sizes = {
+        // Apps principales
         browser: { width: '95vw', height: '80vh' },
         terminal: { width: '95vw', height: '70vh' },
         tictactoe: { width: '95vw', height: '80vh' },
         portfolio: { width: '95vw', height: '80vh' },
         about: { width: '95vw', height: '70vh' },
         flappybird: { width: '95vw', height: '80vh' },
-        snake: { width: '95vw', height: '85vh' }
+        snake: { width: '95vw', height: '85vh' },
+        TorBrowser: { width: '95vw', height: '80vh' },
+        VPNClient: { width: '95vw', height: '70vh' },
+        
+        // PASSWORD MANAGER - TAMAÑOS MÓVIL
+        'password-manager': { width: '95vw', height: '85vh' },
+        'passwordmanager': { width: '95vw', height: '85vh' },
+        
+        // Nuevas apps - tamaños móviles
+        calculator: { width: '90vw', height: '60vh' },
+        youtube: { width: '95vw', height: '70vh' },
+        spotify: { width: '90vw', height: '70vh' },
+        camera: { width: '95vw', height: '80vh' },
+        gallery: { width: '95vw', height: '80vh' },
+        vlc: { width: '95vw', height: '70vh' },
+        files: { width: '95vw', height: '80vh' },
+        settings: { width: '95vw', height: '80vh' }
       };
       return sizes[appName] || { width: '95vw', height: '80vh' };
     };
 
     const getAppComponent = (appName, id) => {
       const components = {
-        // Apps existentes
+        // Apps existentes y funcionales
         browser: <Browser windowId={id} />,
         terminal: <Terminal windowId={id} />,
         tictactoe: <TicTacToe windowId={id} />,
@@ -157,56 +224,104 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         tetris: <Tetris windowId={id} />,
         flappybird: <FlappyBird windowId={id} />,
         snake: <Snake windowId={id} />,
+        'tor-browser': <TorBrowser windowId={id} />,
+        'vpn-client': <VPNClient windowId={id} />,
+        'file-encryption': <FileEncryption windowId={id} />,
         
-        // Placeholders para todas las nuevas apps
-        'tor-browser': <div className="app-content"><h2>🌐 Tor Browser</h2><p>Navegador seguro y anónimo</p></div>,
-        'vpn-client': <div className="app-content"><h2>🛡️ VPN Client</h2><p>Cliente de red privada virtual</p></div>,
-        'file-encryption': <div className="app-content"><h2>🔒 File Encryption</h2><p>Herramienta de cifrado de archivos</p></div>,
-        'password-manager': <div className="app-content"><h2>🔑 Password Manager</h2><p>Gestor de contraseñas seguro</p></div>,
-        'text-editor': <div className="app-content"><h2>📝 Text Editor</h2><p>Editor de texto avanzado</p></div>,
-        spreadsheet: <div className="app-content"><h2>📊 Spreadsheet</h2><p>Hoja de cálculo</p></div>,
-        'pdf-reader': <div className="app-content"><h2>📄 PDF Reader</h2><p>Lector de documentos PDF</p></div>,
-        youtube: <div className="app-content"><h2>📺 YouTube</h2><p>Plataforma de videos</p></div>,
-        spotify: <div className="app-content"><h2>🎵 Spotify</h2><p>Servicio de música en streaming</p></div>,
-        chromedragon: <div className="app-content"><h2>🐉 Chrome Dragon</h2><p>Navegador alternativo</p></div>,
-        gimp: <div className="app-content"><h2>🎨 GIMP</h2><p>Editor de imágenes</p></div>,
-        inkscape: <div className="app-content"><h2>✏️ Inkscape</h2><p>Editor de gráficos vectoriales</p></div>,
-        blender: <div className="app-content"><h2>🎬 Blender</h2><p>Software de modelado 3D</p></div>,
-        screenshot: <div className="app-content"><h2>📸 Screenshot Tool</h2><p>Herramienta de captura de pantalla</p></div>,
-        audacity: <div className="app-content"><h2>🎵 Audacity</h2><p>Editor de audio</p></div>,
-        camera: <div className="app-content"><h2>📷 Camera</h2><p>Aplicación de cámara</p></div>,
-        gallery: <div className="app-content"><h2>🖼️ Gallery</h2><p>Visor de imágenes</p></div>,
-        nintendo: <div className="app-content"><h2>🎮 NES Emulator</h2><p>Emulador de Nintendo</p></div>,
-        nmap: <div className="app-content"><h2>🔍 Network Scanner</h2><p>Escáner de red</p></div>,
-        wireshark: <div className="app-content"><h2>📡 Wireshark</h2><p>Analizador de protocolos</p></div>,
-        metasploit: <div className="app-content"><h2>⚔️ Metasploit</h2><p>Framework de pentesting</p></div>,
-        'burp-suite': <div className="app-content"><h2>🛡️ Burp Suite</h2><p>Herramienta de seguridad web</p></div>,
-        neovim: <div className="app-content"><h2>⚡ Neovim</h2><p>Editor de texto modal</p></div>,
-        vscode: <div className="app-content"><h2>📝 Code Editor</h2><p>Entorno de desarrollo</p></div>,
-        'git-gui': <div className="app-content"><h2>📚 Git GUI</h2><p>Interfaz gráfica para Git</p></div>,
-        files: <div className="app-content"><h2>📁 File Manager</h2><p>Administrador de archivos</p></div>,
-        monitor: <div className="app-content"><h2>📊 System Monitor</h2><p>Monitor del sistema</p></div>,
-        'software-updater': <div className="app-content"><h2>🔄 Software Updater</h2><p>Actualizador de software</p></div>,
-        'service-manager': <div className="app-content"><h2>🛠️ Service Manager</h2><p>Administrador de servicios</p></div>,
-        'system-logs': <div className="app-content"><h2>📋 System Logs</h2><p>Visor de registros del sistema</p></div>,
-        'backup-tool': <div className="app-content"><h2>💾 Backup Tool</h2><p>Herramienta de respaldo</p></div>,
-        firewall: <div className="app-content"><h2>🔥 Firewall Config</h2><p>Configurador de firewall</p></div>,
-        calendar: <div className="app-content"><h2>📅 Calendar</h2><p>Calendario y agenda</p></div>,
-        'screen-magnifier': <div className="app-content"><h2>🔍 Screen Magnifier</h2><p>Lupa de pantalla</p></div>,
-        'screen-reader': <div className="app-content"><h2>📢 Screen Reader</h2><p>Lector de pantalla</p></div>,
-        'on-screen-keyboard': <div className="app-content"><h2>⌨️ On-Screen Keyboard</h2><p>Teclado en pantalla</p></div>,
-        'high-contrast': <div className="app-content"><h2>⚫ High Contrast</h2><p>Modo alto contraste</p></div>
+        // PASSWORD MANAGER - COMPONENTE REAL
+        'password-manager': <PasswordManager windowId={id} />,
+        'passwordmanager': <PasswordManager windowId={id} />,
+        'text-editor': <TextEditor windowId={id} />,
+
+        calculator: <Calculator windowId={id} />,
+        // Placeholders mejorados para todas las nuevas apps
+        spreadsheet: <Spreadsheet windowId={id} />,
+        
+        // ... resto de placeholders (igual que antes)
+       
+        'pdf-reader': (
+          <div className="app-content">
+            <div className="app-header">
+              <h2>📄 PDF Reader</h2>
+              <p>Document viewer</p>
+            </div>
+            <div className="pdf-viewer">
+              <div className="document-placeholder">
+                <p>📄 No document opened</p>
+                <button className="open-button">Open PDF File</button>
+              </div>
+            </div>
+          </div>
+        ),
+        youtube: (
+          <div className="app-content">
+            <div className="app-header">
+              <h2>📺 YouTube</h2>
+              <p>Video platform</p>
+            </div>
+            <div className="video-container">
+              <div className="video-placeholder">
+                <p>🎬 Video Player</p>
+                <p>Search for videos to watch</p>
+              </div>
+            </div>
+          </div>
+        ),
+        spotify: (
+          <div className="app-content">
+            <div className="app-header">
+              <h2>🎵 Spotify</h2>
+              <p>Music streaming</p>
+            </div>
+            <div className="music-player">
+              <div className="now-playing">
+                <p>🎧 Now Playing</p>
+                <p>No song selected</p>
+              </div>
+            </div>
+          </div>
+        ),
+        // ... resto de placeholders
+        chromedragon: <div className="app-content"><h2>🐉 Chrome Dragon</h2><p>Alternative browser</p></div>,
+        gimp: <div className="app-content"><h2>🎨 GIMP</h2><p>Image editor</p></div>,
+        inkscape: <div className="app-content"><h2>✏️ Inkscape</h2><p>Vector graphics editor</p></div>,
+        blender: <div className="app-content"><h2>🎬 Blender</h2><p>3D modeling software</p></div>,
+        screenshot: <div className="app-content"><h2>📸 Screenshot Tool</h2><p>Screen capture utility</p></div>,
+        audacity: <div className="app-content"><h2>🎵 Audacity</h2><p>Audio editor</p></div>,
+        camera: <div className="app-content"><h2>📷 Camera</h2><p>Camera application</p></div>,
+        gallery: <div className="app-content"><h2>🖼️ Gallery</h2><p>Image viewer</p></div>,
+        nintendo: <div className="app-content"><h2>🎮 NES Emulator</h2><p>Nintendo emulator</p></div>,
+        nmap: <div className="app-content"><h2>🔍 Network Scanner</h2><p>Network security scanner</p></div>,
+        wireshark: <div className="app-content"><h2>📡 Wireshark</h2><p>Network protocol analyzer</p></div>,
+        metasploit: <div className="app-content"><h2>⚔️ Metasploit</h2><p>Penetration testing framework</p></div>,
+        'burp-suite': <div className="app-content"><h2>🛡️ Burp Suite</h2><p>Web security testing</p></div>,
+        neovim: <div className="app-content"><h2>⚡ Neovim</h2><p>Modal text editor</p></div>,
+        vscode: <div className="app-content"><h2>📝 Code Editor</h2><p>Development environment</p></div>,
+        'git-gui': <div className="app-content"><h2>📚 Git GUI</h2><p>Graphical Git interface</p></div>,
+        files: <div className="app-content"><h2>📁 File Manager</h2><p>File system browser</p></div>,
+        monitor: <div className="app-content"><h2>📊 System Monitor</h2><p>System performance monitor</p></div>,
+        'software-updater': <div className="app-content"><h2>🔄 Software Updater</h2><p>System updates manager</p></div>,
+        'service-manager': <div className="app-content"><h2>🛠️ Service Manager</h2><p>System services control</p></div>,
+        'system-logs': <div className="app-content"><h2>📋 System Logs</h2><p>System logs viewer</p></div>,
+        'backup-tool': <div className="app-content"><h2>💾 Backup Tool</h2><p>Data backup utility</p></div>,
+        firewall: <div className="app-content"><h2>🔥 Firewall Config</h2><p>Firewall configuration</p></div>,
+        calendar: <div className="app-content"><h2>📅 Calendar</h2><p>Calendar and scheduler</p></div>,
+        'screen-magnifier': <div className="app-content"><h2>🔍 Screen Magnifier</h2><p>Screen magnification tool</p></div>,
+        'screen-reader': <div className="app-content"><h2>📢 Screen Reader</h2><p>Screen reading utility</p></div>,
+        'on-screen-keyboard': <div className="app-content"><h2>⌨️ On-Screen Keyboard</h2><p>Virtual keyboard</p></div>,
+        'high-contrast': <div className="app-content"><h2>⚫ High Contrast</h2><p>High contrast mode</p></div>
       };
       return components[appName] || <div className="app-content"><h2>{appName}</h2><p>Aplicación - System SWAT</p></div>;
     };
 
     const getAppIcon = (appName) => {
       const icons = {
-        // Privacy
+        // Privacy - AGREGADO PASSWORD MANAGER
         'tor-browser': 'https://img.icons8.com/color/48/tor-project.png',
         'vpn-client': 'https://img.icons8.com/color/48/vpn.png',
         'file-encryption': 'https://img.icons8.com/color/48/encryption.png',
         'password-manager': 'https://img.icons8.com/color/48/password.png',
+        'passwordmanager': 'https://img.icons8.com/color/48/password.png',
         
         // Office
         'text-editor': 'https://img.icons8.com/color/48/document.png',
@@ -235,9 +350,7 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         
         // Games
         tictactoe: 'https://img.icons8.com/color/48/tic-tac-toe.png',
-        'flappy-bird': 'https://img.icons8.com/color/48/bird.png',
         flappybird: 'https://img.icons8.com/color/48/bird.png',
-        'snake-game': 'https://img.icons8.com/color/48/snake.png',
         snake: 'https://img.icons8.com/color/48/snake.png',
         'nes-emulator': 'https://img.icons8.com/color/48/nintendo-switch.png',
         nintendo: 'https://img.icons8.com/color/48/nintendo-switch.png',
@@ -362,9 +475,9 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
     };
   }, [activeWindows, activeApp, setActiveWindows, setActiveApp]);
 
-  // Función para manejar el inicio del arrastre (mouse y touch)
+  // Resto del código del WindowManager (las funciones de drag y drop) se mantienen igual...
+  // Función para manejar el inicio del arrastre (CORREGIDA)
   const handleDragStart = (windowId, e) => {
-    // Para mouse: solo click izquierdo, para touch: cualquier touch
     if (e.type === 'mousedown' && e.button !== 0) return;
     
     const windowElement = e.currentTarget.closest('.window');
@@ -381,17 +494,21 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
     setDragOffset({ x: offsetX, y: offsetY });
     setActiveApp(windowId);
 
-    // Agregar clases para feedback visual
     windowElement.classList.add('window-dragging');
     
-    // Prevenir acciones por defecto
-    e.preventDefault();
+    if (e.cancelable) {
+      e.preventDefault();
+    }
     e.stopPropagation();
   };
 
-  // Función para manejar el arrastre
+  // Función para manejar el arrastre (CORREGIDA)
   const handleDrag = (e) => {
     if (!draggingWindow) return;
+
+    if (e.cancelable) {
+      e.preventDefault();
+    }
 
     const windowIndex = activeWindows.findIndex(w => w.id === draggingWindow);
     if (windowIndex === -1) return;
@@ -403,7 +520,6 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
     const newX = clientX - dragOffset.x;
     const newY = clientY - dragOffset.y;
 
-    // Para ventanas móviles, usar porcentajes
     if (currentWindow.isMobile || window.innerWidth <= 768) {
       const percentX = (newX / window.innerWidth) * 100;
       const percentY = (newY / window.innerHeight) * 100;
@@ -417,7 +533,6 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           : window
       ));
     } else {
-      // Para desktop, usar píxeles
       const maxX = window.innerWidth - (typeof currentWindow.size.width === 'number' ? currentWindow.size.width : 300);
       const maxY = window.innerHeight - (typeof currentWindow.size.height === 'number' ? currentWindow.size.height : 200);
 
@@ -432,8 +547,8 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
     }
   };
 
-  // Función para manejar el fin del arrastre
-  const handleDragEnd = () => {
+  // Función para manejar el fin del arrastre (CORREGIDA)
+  const handleDragEnd = (e) => {
     if (!draggingWindow) return;
 
     const windowElement = document.querySelector(`.window[data-window-id="${draggingWindow}"]`);
@@ -443,27 +558,45 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
 
     setDraggingWindow(null);
     setDragOffset({ x: 0, y: 0 });
+
+    if (e && e.cancelable) {
+      e.preventDefault();
+    }
   };
 
-  // Efecto para manejar eventos globales de mouse y touch
+  // Efecto para manejar eventos globales (CORREGIDO)
   useEffect(() => {
     if (draggingWindow) {
-      const events = {
-        mousemove: handleDrag,
-        mouseup: handleDragEnd,
-        touchmove: handleDrag,
-        touchend: handleDragEnd,
-        touchcancel: handleDragEnd
+      const handleMouseMove = (e) => {
+        if (e.cancelable) e.preventDefault();
+        handleDrag(e);
       };
 
-      Object.entries(events).forEach(([event, handler]) => {
-        document.addEventListener(event, handler, { passive: false });
-      });
+      const handleTouchMove = (e) => {
+        if (e.cancelable) e.preventDefault();
+        handleDrag(e);
+      };
+
+      const handleMouseUp = (e) => {
+        handleDragEnd(e);
+      };
+
+      const handleTouchEnd = (e) => {
+        handleDragEnd(e);
+      };
+
+      document.addEventListener('mousemove', handleMouseMove, { passive: false });
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
+      document.addEventListener('mouseup', handleMouseUp, { passive: true });
+      document.addEventListener('touchend', handleTouchEnd, { passive: true });
+      document.addEventListener('touchcancel', handleTouchEnd, { passive: true });
       
       return () => {
-        Object.entries(events).forEach(([event, handler]) => {
-          document.removeEventListener(event, handler);
-        });
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('touchmove', handleTouchMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('touchend', handleTouchEnd);
+        document.removeEventListener('touchcancel', handleTouchEnd);
       };
     }
   }, [draggingWindow, dragOffset, activeWindows]);
@@ -478,35 +611,31 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
 
   // FUNCIONES CORREGIDAS PARA LOS BOTONES
   const handleMinimize = (id, e) => {
+    if (e.cancelable) e.preventDefault();
     e.stopPropagation();
-    e.preventDefault();
     if (window.windowManager && window.windowManager.minimizeApp) {
       window.windowManager.minimizeApp(id);
     }
   };
 
   const handleMaximize = (id, e) => {
+    if (e.cancelable) e.preventDefault();
     e.stopPropagation();
-    e.preventDefault();
     if (window.windowManager && window.windowManager.maximizeApp) {
       window.windowManager.maximizeApp(id);
     }
   };
 
   const handleClose = (id, e) => {
+    if (e.cancelable) e.preventDefault();
     e.stopPropagation();
-    e.preventDefault();
     if (window.windowManager && window.windowManager.closeApp) {
       window.windowManager.closeApp(id);
     }
   };
 
   return (
-    <div 
-      className="window-manager" 
-      onMouseMove={draggingWindow ? handleDrag : undefined}
-      onTouchMove={draggingWindow ? handleDrag : undefined}
-    >
+    <div className="window-manager">
       {activeWindows.map((window) => (
         <div
           key={window.id}
@@ -596,7 +725,6 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           resize: both;
         }
         
-        /* Tamaños para desktop */
         .window.desktop {
           min-width: min(400px, 90vw);
           min-height: min(300px, 50vh);
@@ -604,7 +732,6 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           max-height: 90vh;
         }
         
-        /* Tamaños para móvil */
         .window.mobile {
           min-width: 85vw;
           min-height: 50vh;
@@ -635,7 +762,6 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           z-index: 9999 !important;
         }
         
-        /* HEADER ESTILO PARROT OS */
         .window-header {
           background: #2F343F;
           padding: 8px 12px;
@@ -645,7 +771,7 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           border-bottom: 1px solid #3a3f4b;
           cursor: grab;
           user-select: none;
-          touch-action: none;
+          touch-action: pan-x pan-y;
           min-height: 36px;
           gap: 12px;
         }
@@ -654,6 +780,11 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           min-height: 44px;
           padding: 12px 16px;
           cursor: default;
+          touch-action: pan-x pan-y;
+        }
+        
+        .window-dragging .window-header {
+          touch-action: none;
         }
         
         .window-header:active {
@@ -714,6 +845,12 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           touch-action: manipulation;
           position: relative;
           padding: 0;
+          -webkit-tap-highlight-color: transparent;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
         }
         
         .window.desktop .control-button {
@@ -743,7 +880,6 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           height: 10px;
         }
         
-        /* Botón Minimizar - NARANJA */
         .minimize-button .control-dot {
           background: #f6ad55;
         }
@@ -753,7 +889,6 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           transform: scale(1.2);
         }
         
-        /* Botón Maximizar - VERDE */
         .maximize-button .control-dot {
           background: #68d391;
         }
@@ -763,7 +898,6 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           transform: scale(1.2);
         }
         
-        /* Botón Cerrar - ROJO */
         .close-button .control-dot {
           background: #fc8181;
         }
@@ -795,32 +929,197 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           user-select: text;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          color: var(--text-primary);
           background: #1a202c;
+          color: var(--text-primary);
         }
 
-        .app-content h2 {
+        .app-header {
+          text-align: center;
+          margin-bottom: var(--space-lg);
+          padding-bottom: var(--space-md);
+          border-bottom: 1px solid #2d3748;
+        }
+
+        .app-header h2 {
           color: #e2e8f0;
-          margin-bottom: var(--space-md);
+          margin-bottom: var(--space-sm);
           font-size: var(--text-xl);
           font-weight: 600;
         }
 
-        .app-content p {
+        .app-header p {
           color: #a0aec0;
           font-size: var(--text-md);
-          max-width: 400px;
-          line-height: 1.5;
+        }
+
+        .app-body {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-md);
+        }
+
+        .feature-section {
+          background: #2d3748;
+          padding: var(--space-md);
+          border-radius: 8px;
+        }
+
+        .feature-section h3 {
+          color: #e2e8f0;
+          margin-bottom: var(--space-sm);
+          font-size: var(--text-lg);
+        }
+
+        .feature-section ul {
+          color: #a0aec0;
+          padding-left: var(--space-md);
+        }
+
+        .feature-section li {
+          margin-bottom: var(--space-xs);
+        }
+
+        .vault-status {
+          background: #2d3748;
+          padding: var(--space-md);
+          border-radius: 8px;
+          text-align: center;
+        }
+
+        .vault-status p {
+          margin-bottom: var(--space-sm);
+          font-size: var(--text-md);
+        }
+
+        .editor-area {
+          flex: 1;
+          display: flex;
+        }
+
+        .text-editor {
+          flex: 1;
+          background: #2d3748;
+          border: 1px solid #4a5568;
+          border-radius: 4px;
+          padding: var(--space-md);
+          color: #e2e8f0;
+          font-family: 'Ubuntu Mono', monospace;
+          resize: none;
+          outline: none;
+        }
+
+        .calculator-display {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-md);
+        }
+
+        .display {
+          background: #2d3748;
+          padding: var(--space-md);
+          border-radius: 4px;
+          text-align: right;
+          font-size: var(--text-xl);
+          font-family: 'Ubuntu Mono', monospace;
+          color: #e2e8f0;
+        }
+
+        .calculator-buttons {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-sm);
+        }
+
+        .button-row {
+          display: flex;
+          gap: var(--space-sm);
+        }
+
+        .button-row button {
+          flex: 1;
+          padding: var(--space-md);
+          background: #4a5568;
+          border: none;
+          border-radius: 4px;
+          color: #e2e8f0;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+
+        .button-row button:hover {
+          background: #718096;
+        }
+
+        .spreadsheet-grid {
+          flex: 1;
+          overflow: auto;
+        }
+
+        .spreadsheet-grid table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+
+        .spreadsheet-grid th,
+        .spreadsheet-grid td {
+          border: 1px solid #4a5568;
+          padding: var(--space-sm);
+          text-align: center;
+          min-width: 80px;
+        }
+
+        .spreadsheet-grid th {
+          background: #2d3748;
+          color: #e2e8f0;
+          font-weight: 600;
+        }
+
+        .spreadsheet-grid td {
+          background: #1a202c;
+          color: #a0aec0;
+        }
+
+        .pdf-viewer {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .document-placeholder {
+          text-align: center;
+          color: #a0aec0;
+        }
+
+        .open-button {
+          margin-top: var(--space-md);
+          padding: var(--space-sm) var(--space-md);
+          background: #4a5568;
+          border: none;
+          border-radius: 4px;
+          color: #e2e8f0;
+          cursor: pointer;
+        }
+
+        .video-container,
+        .music-player {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .video-placeholder,
+        .now-playing {
+          text-align: center;
+          color: #a0aec0;
         }
 
         .window.mobile .app-content {
           padding: var(--space-md);
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
           .window.desktop {
             min-width: 85vw;
@@ -859,7 +1158,6 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
           }
         }
 
-        /* Scrollbars */
         .window-content::-webkit-scrollbar {
           width: 6px;
         }
