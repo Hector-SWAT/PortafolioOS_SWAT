@@ -14,6 +14,7 @@ import PasswordManager from './apps/PasswordManager';
 import TextEditor from './apps/TextEditor';
 import Calculator from './apps/Calculator';
 import Spreadsheet from './apps/Spreadsheet';
+import PDFReader from './apps/PDFReader';
 
 const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setActiveApp }) => {
   const [draggingWindow, setDraggingWindow] = useState(null);
@@ -236,23 +237,11 @@ const WindowManager = ({ activeWindows = [], setActiveWindows, activeApp, setAct
         calculator: <Calculator windowId={id} />,
         // Placeholders mejorados para todas las nuevas apps
         spreadsheet: <Spreadsheet windowId={id} />,
+        'pdf-reader': <PDFReader windowId={id} />,
         
         // ... resto de placeholders (igual que antes)
        
-        'pdf-reader': (
-          <div className="app-content">
-            <div className="app-header">
-              <h2>📄 PDF Reader</h2>
-              <p>Document viewer</p>
-            </div>
-            <div className="pdf-viewer">
-              <div className="document-placeholder">
-                <p>📄 No document opened</p>
-                <button className="open-button">Open PDF File</button>
-              </div>
-            </div>
-          </div>
-        ),
+        
         youtube: (
           <div className="app-content">
             <div className="app-header">
